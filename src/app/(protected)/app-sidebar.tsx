@@ -10,9 +10,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { sidebarItems } from "@/data/sidebar-data";
+import useProject from "@/hooks/use-project";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,20 +23,22 @@ import React from "react";
 
 const AppSidebar = () => {
   const pathname = usePathname();
+  const { projects, projectId, setProjectId } = useProject();
   const { open } = useSidebar();
   return (
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
+        <SidebarTrigger />
         <div className="flex items-center gap-2">
           <Image
-            src="/logo.png"
+            src="/icon.png"
             alt="logo"
             width={80}
             height={80}
-            className="width-16 height-16 rounded-full object-cover"
+            className="size-12 rounded-full object-cover p-0"
           />
           {open && (
-            <h1 className="text-primary/80 text-xl font-bold">GitOSphere</h1>
+            <h1 className="text-primary/80 text-3xl font-bold">GitLexia</h1>
           )}
         </div>
       </SidebarHeader>
@@ -63,16 +67,21 @@ const AppSidebar = () => {
           <SidebarGroupLabel>Your Projects</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {sidebarItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+              {(projects ?? []).map((item) => (
+                <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton asChild>
-                    <div className="w-full">
+                    <div
+                      onClick={() => {
+                        setProjectId(item.id);
+                      }}
+                      className="w-full"
+                    >
                       <div
-                        className={`text-primary m-0 flex size-6 shrink-0 items-center justify-center rounded-sm border bg-white text-sm ${pathname === item.url && "bg-primary! text-white!"}`}
+                        className={`text-primary m-0 flex size-6 shrink-0 items-center justify-center rounded-sm border bg-white text-sm ${item.id === projectId && "bg-primary! text-white!"}`}
                       >
-                        {item.title[0]}
+                        {item.name[0]}
                       </div>
-                      {open && <span>{item.title}</span>}
+                      {open && <span>{item.name}</span>}
                     </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

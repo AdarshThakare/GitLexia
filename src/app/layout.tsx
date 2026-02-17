@@ -5,13 +5,14 @@ import { Geist } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TRPCReactProvider } from "@/trpc/react";
 import localFont from "next/font/local";
+import { Toaster } from "sonner";
 
 const sup = localFont({ src: "../fonts/sup/sup.woff2" });
 
 export const metadata: Metadata = {
-  title: "GitOSphere",
+  title: "GitLexia",
   description: "An helper app for quick Github lookup",
-  icons: [{ rel: "icon", url: "/gitlogo.png" }],
+  icons: [{ rel: "icon", url: "/iconic.png" }],
 };
 
 export default function RootLayout({
@@ -22,6 +23,7 @@ export default function RootLayout({
       <html lang="en" className={`${sup.className}`}>
         <body>
           <TRPCReactProvider>{children}</TRPCReactProvider>
+          <Toaster richColors />
         </body>
       </html>
     </ClerkProvider>

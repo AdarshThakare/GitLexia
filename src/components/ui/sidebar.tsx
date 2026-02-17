@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight, PanelLeftIcon } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -30,7 +30,7 @@ const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
-const SIDEBAR_KEYBOARD_SHORTCUT = "b";
+const SIDEBAR_KEYBOARD_SHORTCUT = "x";
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
@@ -259,6 +259,7 @@ function SidebarTrigger({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar();
+  const [open, setOpen] = React.useState(false);
 
   return (
     <Button
@@ -266,14 +267,15 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn("size-7", className)}
+      className={cn("size-7 2xl:size-10", className)}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
+        setOpen(!open);
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      {!open ? <ArrowLeft /> : <ArrowRight />}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );
