@@ -125,7 +125,7 @@ const AskQuestionCard = () => {
       <Card className="border-border/40 bg-background hover:border-primary/40 relative col-span-3 hover:shadow-md">
         <CardHeader>
           <CardTitle className="text-xl">
-            Need Insights ? Ask your Question Here.
+            Need Insights? Ask your Question Here.
           </CardTitle>
           <h5 className="-mt-2 mb-3 text-sm tracking-wide text-gray-400">
             GitLexia has all the Knowledge of your Codebase

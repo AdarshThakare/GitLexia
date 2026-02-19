@@ -71,7 +71,7 @@ const SearchBar = ({ projectId }: SearchBarProps) => {
   return (
     <div ref={wrapperRef} className="relative w-full max-w-xl">
       {/* Input */}
-      <div className="flex items-center rounded-lg border px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-gray-400!">
+      <div className="flex items-center rounded-lg border px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-gray-300!">
         <Search className="mr-2 h-4 w-4 text-gray-500" />
         <input
           type="text"
