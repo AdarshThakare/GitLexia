@@ -7,9 +7,17 @@ import React from "react";
 import CommitLog from "./commit-log";
 import AskQuestionCard from "./ask-question";
 import MeetingCard from "./meeting-card";
+import ArchiveButton from "./archive-button";
+import InviteButton from "./invite-button";
+import TeamMembers from "./team-members";
+import { redirect } from "next/navigation";
 
 const DashboardPage = () => {
   const { project } = useProject();
+  if (!project) redirect("/create");
+
+  localStorage.setItem("projectId", project.id);
+
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-y-4">
@@ -29,6 +37,10 @@ const DashboardPage = () => {
               </p>
             </div>
           </div>
+        </div>
+        <div className="h-4"></div>
+        <div className="flex items-center gap-4">
+          <TeamMembers /> <InviteButton /> <ArchiveButton />
         </div>
       </div>
       <div className="mt-4">

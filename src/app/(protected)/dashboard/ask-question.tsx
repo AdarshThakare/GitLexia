@@ -122,7 +122,7 @@ const AskQuestionCard = () => {
         </DialogContent>
       </Dialog>
 
-      <Card className="border-border/40 bg-background hover:border-primary/40 relative col-span-3">
+      <Card className="border-border/40 bg-background hover:border-primary/40 relative col-span-3 hover:shadow-md">
         <CardHeader>
           <CardTitle className="text-xl">
             Need Insights ? Ask your Question Here.

@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 
-const MeetingCard = () => {
+const UploadingMeetingCard = () => {
   const { project } = useProject();
   const processMeeting = useMutation({
     mutationFn: async (data: {
@@ -77,59 +77,66 @@ const MeetingCard = () => {
   return (
     <Card
       {...getRootProps()}
-      className="col-span-2 flex cursor-pointer flex-col items-center justify-center rounded-xl border border-blue-500/20 bg-linear-to-br from-blue-50 via-white to-blue-100 text-center transition-all duration-300 hover:border-blue-500/50 hover:shadow-md"
+      className="relative w-full cursor-pointer overflow-hidden rounded-2xl border border-blue-200/60 bg-linear-to-br from-blue-600 via-blue-500 to-indigo-600 shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-blue-200/50"
     >
+      {/* Decorative background blobs */}
+      <div className="pointer-events-none absolute -top-16 -right-16 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-10 -left-10 h-48 w-48 rounded-full bg-indigo-400/20 blur-2xl" />
+      <div className="pointer-events-none absolute right-1/3 bottom-0 h-32 w-32 rounded-full bg-blue-300/10 blur-2xl" />
+
       {!isUploading && (
-        <>
-          {/* Icon */}
-          <div className="flex items-center justify-center rounded-full bg-blue-500/10 p-3 transition-all duration-300 hover:bg-blue-500/20">
-            <Projector className="size-8 text-blue-600 transition-transform duration-300 hover:scale-110" />
+        <div className="relative flex flex-col items-center justify-center gap-4 px-8 text-center sm:flex-row sm:justify-between sm:text-left">
+          {/* Left: icon + text */}
+          <div className="flex items-center gap-5">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 shadow-inner backdrop-blur-sm">
+              <Projector className="size-7 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white">
+                Create a New Meeting
+              </h3>
+              <p className="mt-0.5 text-sm text-blue-100/80">
+                Upload your audio and get AI-powered insights instantly
+              </p>
+              <p className="mt-1 text-xs text-blue-200/60">
+                MP3 · WAV · M4A &nbsp;·&nbsp; Max 50MB
+              </p>
+            </div>
           </div>
 
-          {/* Title */}
-          <h3 className="-mt-3 text-xl font-semibold text-blue-900">
-            Create a New Meeting
-          </h3>
-
-          {/* Small Footer Note */}
-          <p className="-mt-4 text-[10px] text-blue-800/60">
-            MP3 • WAV • M4A (Max 50MB)
-          </p>
-
-          {/* Upload Button */}
-          <div className="-mt-2">
+          {/* Right: upload button */}
+          <div className="shrink-0">
             <Button
               disabled={isUploading}
               size="sm"
-              className="rounded-full! bg-blue-600 px-4! py-2! text-white shadow-sm transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700"
+              className="rounded-full bg-white px-6 py-2 text-sm font-semibold text-blue-600 shadow-md transition-all duration-200 hover:scale-[1.03] hover:bg-blue-50 hover:shadow-lg"
             >
               <Upload className="mr-2 size-4" />
               Upload Meeting
               <input type="text" {...getInputProps()} className="hidden" />
             </Button>
           </div>
-        </>
+        </div>
       )}
+
       {isUploading && (
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <div className="relative size-28">
+        <div className="relative flex flex-col items-center justify-center gap-5 px-8 py-10 sm:flex-row sm:gap-10">
+          {/* Circular progress */}
+          <div className="relative size-24 shrink-0">
             <svg className="absolute inset-0 -rotate-90" viewBox="0 0 100 100">
-              {/* Background Track */}
               <circle
                 cx="50"
                 cy="50"
                 r="45"
-                stroke="#e5e7eb"
+                stroke="rgba(255,255,255,0.2)"
                 strokeWidth="8"
                 fill="transparent"
               />
-
-              {/* Progress Ring */}
               <circle
                 cx="50"
                 cy="50"
                 r="45"
-                stroke="#2563eb"
+                stroke="white"
                 strokeWidth="8"
                 fill="transparent"
                 strokeLinecap="round"
@@ -140,20 +147,33 @@ const MeetingCard = () => {
                 className="transition-all duration-500 ease-out"
               />
             </svg>
-
-            {/* Percentage Text */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-xl font-semibold text-black">
+              <span className="text-xl font-semibold text-white">
                 {progress}%
               </span>
             </div>
           </div>
 
-          <p className="text-sm text-gray-500">Uploading your meeting...</p>
+          {/* Upload status text */}
+          <div>
+            <p className="text-base font-semibold text-white">
+              Uploading your meeting…
+            </p>
+            <p className="mt-1 text-sm text-blue-100/70">
+              Please keep this tab open until the upload completes.
+            </p>
+            {/* Progress bar */}
+            <div className="mt-3 h-1.5 w-64 overflow-hidden rounded-full bg-white/20">
+              <div
+                className="h-full rounded-full bg-white transition-all duration-500 ease-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
         </div>
       )}
     </Card>
   );
 };
 
-export default MeetingCard;
+export default UploadingMeetingCard;

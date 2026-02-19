@@ -12,9 +12,12 @@ import {
 } from "@/components/ui/sheet";
 import MDEditor from "@uiw/react-md-editor";
 import CodeReferences from "../dashboard/code-references";
+import { redirect } from "next/navigation";
 
 const page = () => {
-  const { projectId } = useProject();
+  const { projectId, project } = useProject();
+  if (!project) redirect("/create");
+
   const { data: questions } = api.project.getQuestion.useQuery({ projectId });
 
   const [questionIndex, setQuestionIndex] = useState(0);

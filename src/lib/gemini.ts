@@ -1,5 +1,7 @@
+import { google } from "@ai-sdk/google";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Document } from "@langchain/core/documents";
+import { generateText } from "ai";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -75,3 +77,27 @@ export async function generateEmbedding(summary: string) {
   const embedding = result.embedding;
   return embedding.values;
 }
+
+export const generateMeetingSummary = async (text: string) => {
+  const response = await model.generateContent([
+    `
+You are an AI meeting assistant.
+
+Based on the following meeting transcript, generate:
+
+1. A short professional headline (max 10 words)
+2. A concise executive summary in paragraphs
+
+Transcript:
+${text}
+
+Respond strictly in JSON format:
+{
+  "headline": "...",
+  "summary": "..."
+}
+`,
+  ]);
+
+  return response.response.text();
+};
