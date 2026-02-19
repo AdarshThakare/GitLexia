@@ -46,13 +46,27 @@ model Issue {
 }
 
 model User {
-  id             String          @id @default(uuid())
-  emailAddress   String          @unique
-  firstName      String?
-  lastName       String?
-  imageUrl       String?
-  questionsAsked Question[]
-  userToProjects UserToProject[]
+  id                   String          @id @default(uuid())
+  emailAddress         String          @unique
+  firstName            String?
+  lastName             String?
+  imageUrl             String?
+  questionsAsked       Question[]
+  userToProjects       UserToProject[]
+  RazorpayTransactions Transaction[]
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId            String
+  user              User   @relation(fields: [userId], references: [id])
+  credits           Int
+  razorpayOrderId   String
+  razorpayPaymentId String @unique
+  razorpaySignature String
 }
 
 model Question {

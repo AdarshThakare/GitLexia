@@ -151,6 +151,17 @@ exports.Prisma.UserScalarFieldEnum = {
   imageUrl: 'imageUrl'
 };
 
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  credits: 'credits',
+  razorpayOrderId: 'razorpayOrderId',
+  razorpayPaymentId: 'razorpayPaymentId',
+  razorpaySignature: 'razorpaySignature'
+};
+
 exports.Prisma.QuestionScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -234,6 +245,7 @@ exports.Prisma.ModelName = {
   Meeting: 'Meeting',
   Issue: 'Issue',
   User: 'User',
+  Transaction: 'Transaction',
   Question: 'Question',
   Project: 'Project',
   UserToProject: 'UserToProject',

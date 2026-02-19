@@ -3,6 +3,7 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { pollCommits } from "@/lib/github";
 import { indexGithubRepo } from "@/lib/github-loader";
 import { esClient } from "@/lib/elastic-search";
+import { createRazorpayOrder, verifyAndCreditUser } from "@/lib/razorpay";
 
 export const projectRouter = createTRPCRouter({
   createProject: protectedProcedure
@@ -29,6 +30,7 @@ export const projectRouter = createTRPCRouter({
       await pollCommits(project.id);
       return project;
     }),
+
   getProjects: protectedProcedure.query(async ({ ctx }) => {
     return await ctx.db.project.findMany({
       where: {
@@ -41,6 +43,7 @@ export const projectRouter = createTRPCRouter({
       },
     });
   }),
+
   getCommits: protectedProcedure
     .input(
       z.object({
@@ -53,6 +56,7 @@ export const projectRouter = createTRPCRouter({
         where: { projectId: input.projectId },
       });
     }),
+
   saveAnswer: protectedProcedure
     .input(
       z.object({
@@ -73,6 +77,7 @@ export const projectRouter = createTRPCRouter({
         },
       });
     }),
+
   getQuestion: protectedProcedure
     .input(z.object({ projectId: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -88,6 +93,7 @@ export const projectRouter = createTRPCRouter({
         },
       });
     }),
+
   uploadMeeting: protectedProcedure
     .input(
       z.object({
@@ -108,6 +114,7 @@ export const projectRouter = createTRPCRouter({
 
       return meeting;
     }),
+
   getMeetings: protectedProcedure
     .input(z.object({ projectId: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -116,11 +123,13 @@ export const projectRouter = createTRPCRouter({
         include: { issues: true },
       });
     }),
+
   deleteMeetings: protectedProcedure
     .input(z.object({ meetingId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       return await ctx.db.meeting.delete({ where: { id: input.meetingId } });
     }),
+
   getMeetingById: protectedProcedure
     .input(z.object({ meetingId: z.string() }))
     .query(async ({ ctx, input }) => {
@@ -129,6 +138,7 @@ export const projectRouter = createTRPCRouter({
         include: { issues: true },
       });
     }),
+
   archiveProject: protectedProcedure
     .input(z.object({ projectId: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -146,6 +156,7 @@ export const projectRouter = createTRPCRouter({
         include: { user: true },
       });
     }),
+
   search: protectedProcedure
     .input(
       z.object({
@@ -187,5 +198,64 @@ export const projectRouter = createTRPCRouter({
         ...hit._source,
         highlight: hit.highlight || null,
       }));
+    }),
+
+  // ─── Billing ────────────────────────────────────────────────────────────────
+
+  getMyCredits: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.user.findUnique({
+      where: { id: ctx.user.userId! },
+      select: {
+        emailAddress: true,
+        firstName: true,
+      },
+    });
+  }),
+
+  getTransactions: protectedProcedure.query(async ({ ctx }) => {
+    return await ctx.db.transaction.findMany({
+      where: { userId: ctx.user.userId! },
+      orderBy: { createdAt: "desc" },
+    });
+  }),
+
+  /**
+   * Step 1 — called before opening the Razorpay checkout.
+   * Creates a Razorpay order and returns the order ID to the client.
+   */
+  createOrder: protectedProcedure
+    .input(
+      z.object({
+        credits: z.number().int().positive(),
+        amount: z.number().int().positive(), // INR, e.g. 499
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const order = await createRazorpayOrder(input.amount, input.credits);
+      return order; // { razorpayOrderId, amount, currency }
+    }),
+
+  /**
+   * Step 2 — called inside the Razorpay payment handler after success.
+   * Verifies the signature, records the transaction, and credits the user.
+   */
+  verifyPayment: protectedProcedure
+    .input(
+      z.object({
+        credits: z.number().int().positive(),
+        razorpayOrderId: z.string(),
+        razorpayPaymentId: z.string(),
+        razorpaySignature: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await verifyAndCreditUser({
+        userId: ctx.user.userId!,
+        credits: input.credits,
+        razorpayOrderId: input.razorpayOrderId,
+        razorpayPaymentId: input.razorpayPaymentId,
+        razorpaySignature: input.razorpaySignature,
+      });
+      return { success: true };
     }),
 });
