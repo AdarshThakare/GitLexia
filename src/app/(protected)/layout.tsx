@@ -23,7 +23,7 @@ const SidebarLayout = ({ children }: { children: ReactNode }) => {
           <UserButton />
         </div>
         <div className="h-2.5"></div>
-        <div className="border-sidebar-border bg-sidebar h-[calc(100vh-4.4rem)] overflow-y-scroll rounded-md border p-4 shadow">
+        <div className="border-sidebar-border bg-sidebar h-[calc(100vh-5.4rem)] overflow-y-scroll rounded-md border p-4 shadow">
           {children}
         </div>
       </main>

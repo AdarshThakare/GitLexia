@@ -8,7 +8,40 @@ import React from "react";
 
 const CommitLog = () => {
   const { projectId, project } = useProject();
-  const { data: commits } = api.project.getCommits.useQuery({ projectId });
+  const { data: commits, isLoading } = api.project.getCommits.useQuery({
+    projectId,
+  });
+  if (isLoading) {
+    return (
+      <ul className="space-y-6">
+        {[...Array(5)].map((_, i) => (
+          <li key={i} className="relative flex gap-x-4">
+            <div
+              className={cn(
+                i === 4 ? "h-6" : "-bottom-6",
+                "absolute top-0 left-0 flex w-6 justify-center",
+              )}
+            >
+              <div className="w-px translate-x-1 bg-gray-200" />
+            </div>
+            <div className="relative mt-4 size-8 flex-none animate-pulse rounded-full bg-stone-200" />
+            <div className="flex-auto rounded-md bg-white p-3 px-5 ring-1 ring-gray-200 ring-inset">
+              <div className="flex flex-col gap-3">
+                <div className="h-3.5 w-32 animate-pulse rounded bg-stone-200" />
+                <div className="h-5 w-2/3 animate-pulse rounded bg-stone-200" />
+                <div className="flex flex-col gap-2">
+                  <div className="h-3 w-full animate-pulse rounded bg-stone-100" />
+                  <div className="h-3 w-5/6 animate-pulse rounded bg-stone-100" />
+                  <div className="h-3 w-4/6 animate-pulse rounded bg-stone-100" />
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <>
       <ul className="space-y-6">
@@ -48,9 +81,20 @@ const CommitLog = () => {
                 <span className="text-lg font-extrabold text-blue-600">
                   {commit.commitMessage}
                 </span>
-                <pre className="mt-2 text-sm leading-6 whitespace-pre-wrap text-gray-600">
-                  {commit.summary}
-                </pre>
+                {commit.summary ? (
+                  <pre className="mt-2 text-sm leading-6 whitespace-pre-wrap text-gray-600">
+                    {commit.summary}
+                  </pre>
+                ) : (
+                  <div className="mt-3 flex flex-col gap-2">
+                    <div className="h-3 w-full animate-pulse rounded bg-stone-100" />
+                    <div className="h-3 w-5/6 animate-pulse rounded bg-stone-100" />
+                    <div className="h-3 w-4/6 animate-pulse rounded bg-stone-100" />
+                    <p className="mt-1 text-[11px] text-stone-400">
+                      Generating summary…
+                    </p>
+                  </div>
+                )}
               </div>
             </>
           </li>
