@@ -126,8 +126,8 @@ model Commit {
 }
 
 model SourceCodeEmbedding {
-  id               String                       @id @default(cuid())
-  summaryEmbedding Unsupported("vector(3072)")?
+  id               String                      @id @default(cuid())
+  summaryEmbedding Unsupported("vector(768)")?
   sourceCode       String
   fileName         String
   summary          String

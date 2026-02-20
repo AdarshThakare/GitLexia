@@ -21,7 +21,7 @@ const DashboardPage = () => {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-y-4">
-        <div className="w-fit rounded-md border border-black px-4 py-3">
+        <div className="w-fit rounded-full border border-black px-4 py-3">
           <div className="flex items-center">
             <Github className="size-5 text-black" />
             <div className="ml-2">
