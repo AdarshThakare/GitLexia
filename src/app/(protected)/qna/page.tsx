@@ -58,49 +58,64 @@ const page = () => {
 
   return (
     <Sheet>
-      <AskQuestionCard />
-      <div className="h-4"></div>
-      <h1 className="text-xl font-semibold">Saved Questions</h1>
-      <div className="h-2"></div>
+      <div className="flex flex-col gap-8 animate-in fade-in duration-700">
+        <div className="bg-white rounded-md border border-slate-200 p-2 shadow-sm">
+          <AskQuestionCard />
+        </div>
 
-      <div className="flex flex-col gap-2">
-        {isLoading ? (
-          <>
-            <SavedQuestionSkeleton />
-            <SavedQuestionSkeleton />
-            <SavedQuestionSkeleton />
-          </>
-        ) : questions && questions.length > 0 ? (
-          questions.map((question, index) => (
-            <React.Fragment key={question.id}>
-              <SheetTrigger onClick={() => setQuestionIndex(index)}>
-                <div className="hover:border-primary/30 flex cursor-pointer items-center gap-4 rounded-lg border bg-white p-4 text-left shadow transition-all duration-200 hover:shadow-md">
-                  <img
-                    className="shrink-0 rounded-full"
-                    height={30}
-                    width={30}
-                    src={question.user.imageUrl ?? ""}
-                  />
-                  <div className="flex w-full min-w-0 flex-col text-left">
-                    <div className="flex items-center gap-2">
-                      <p className="line-clamp-1 text-lg font-medium text-gray-700">
-                        {question.question}
-                      </p>
-                      <span className="ml-auto text-xs whitespace-nowrap text-gray-400">
-                        {question.createdAt.toLocaleDateString()}
-                      </span>
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+            <h1 className="text-3xl font-black text-slate-900 tracking-tight" style={{ fontFamily: 'sup' }}>
+              Saved Questions
+            </h1>
+            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>
+              {questions?.length || 0} Synaptic Records
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            {isLoading ? (
+              <div className="space-y-4">
+                <SavedQuestionSkeleton />
+                <SavedQuestionSkeleton />
+                <SavedQuestionSkeleton />
+              </div>
+            ) : questions && questions.length > 0 ? (
+              questions.map((question, index) => (
+                <React.Fragment key={question.id}>
+                  <SheetTrigger onClick={() => setQuestionIndex(index)}>
+                    <div className="hover:border-indigo-300 flex cursor-pointer items-center gap-6 rounded-md border border-slate-200 bg-white p-6 text-left shadow-sm transition-all duration-300 hover:shadow-md group">
+                      <div className="relative">
+                        <img
+                          className="shrink-0 rounded-md border-2 border-slate-100"
+                          height={40}
+                          width={40}
+                          src={question.user.imageUrl ?? ""}
+                        />
+                        <div className="absolute -bottom-1 -right-1 size-3 bg-emerald-500 rounded-full border-2 border-white" />
+                      </div>
+                      <div className="flex w-full min-w-0 flex-col text-left">
+                        <div className="flex items-center gap-3 mb-1">
+                          <p className="line-clamp-1 text-lg font-black text-slate-800 tracking-tight group-hover:text-indigo-600 transition-colors" style={{ fontFamily: 'sup' }}>
+                            {question.question}
+                          </p>
+                          <span className="ml-auto text-[10px] font-bold whitespace-nowrap text-slate-400 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>
+                            {question.createdAt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                          </span>
+                        </div>
+                        <div className="line-clamp-1 text-sm font-medium text-slate-500 leading-relaxed">
+                          {question.answer}
+                        </div>
+                      </div>
                     </div>
-                    <div className="line-clamp-1 text-sm text-gray-500">
-                      {question.answer}
-                    </div>
-                  </div>
-                </div>
-              </SheetTrigger>
-            </React.Fragment>
-          ))
-        ) : (
-          <EmptyState />
-        )}
+                  </SheetTrigger>
+                </React.Fragment>
+              ))
+            ) : (
+              <EmptyState />
+            )}
+          </div>
+        </div>
       </div>
 
       {question && (

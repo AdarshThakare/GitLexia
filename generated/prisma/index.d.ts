@@ -54,6 +54,11 @@ export type UserToProject = $Result.DefaultSelection<Prisma.$UserToProjectPayloa
  */
 export type Commit = $Result.DefaultSelection<Prisma.$CommitPayload>
 /**
+ * Model MeetingReport
+ * 
+ */
+export type MeetingReport = $Result.DefaultSelection<Prisma.$MeetingReportPayload>
+/**
  * Model SourceCodeEmbedding
  * 
  */
@@ -273,6 +278,16 @@ export class PrismaClient<
     * ```
     */
   get commit(): Prisma.CommitDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.meetingReport`: Exposes CRUD operations for the **MeetingReport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MeetingReports
+    * const meetingReports = await prisma.meetingReport.findMany()
+    * ```
+    */
+  get meetingReport(): Prisma.MeetingReportDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.sourceCodeEmbedding`: Exposes CRUD operations for the **SourceCodeEmbedding** model.
@@ -732,6 +747,7 @@ export namespace Prisma {
     Project: 'Project',
     UserToProject: 'UserToProject',
     Commit: 'Commit',
+    MeetingReport: 'MeetingReport',
     SourceCodeEmbedding: 'SourceCodeEmbedding'
   };
 
@@ -751,7 +767,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "meeting" | "issue" | "user" | "transaction" | "question" | "project" | "userToProject" | "commit" | "sourceCodeEmbedding"
+      modelProps: "meeting" | "issue" | "user" | "transaction" | "question" | "project" | "userToProject" | "commit" | "meetingReport" | "sourceCodeEmbedding"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1347,6 +1363,80 @@ export namespace Prisma {
           }
         }
       }
+      MeetingReport: {
+        payload: Prisma.$MeetingReportPayload<ExtArgs>
+        fields: Prisma.MeetingReportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MeetingReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MeetingReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>
+          }
+          findFirst: {
+            args: Prisma.MeetingReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MeetingReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>
+          }
+          findMany: {
+            args: Prisma.MeetingReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>[]
+          }
+          create: {
+            args: Prisma.MeetingReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>
+          }
+          createMany: {
+            args: Prisma.MeetingReportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MeetingReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>[]
+          }
+          delete: {
+            args: Prisma.MeetingReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>
+          }
+          update: {
+            args: Prisma.MeetingReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>
+          }
+          deleteMany: {
+            args: Prisma.MeetingReportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MeetingReportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MeetingReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>[]
+          }
+          upsert: {
+            args: Prisma.MeetingReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MeetingReportPayload>
+          }
+          aggregate: {
+            args: Prisma.MeetingReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMeetingReport>
+          }
+          groupBy: {
+            args: Prisma.MeetingReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MeetingReportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MeetingReportCountArgs<ExtArgs>
+            result: $Utils.Optional<MeetingReportCountAggregateOutputType> | number
+          }
+        }
+      }
       SourceCodeEmbedding: {
         payload: Prisma.$SourceCodeEmbeddingPayload<ExtArgs>
         fields: Prisma.SourceCodeEmbeddingFieldRefs
@@ -1525,6 +1615,7 @@ export namespace Prisma {
     project?: ProjectOmit
     userToProject?: UserToProjectOmit
     commit?: CommitOmit
+    meetingReport?: MeetingReportOmit
     sourceCodeEmbedding?: SourceCodeEmbeddingOmit
   }
 
@@ -1691,6 +1782,7 @@ export namespace Prisma {
     sourceCodeEmbeddings: number
     savedQuestions: number
     meetings: number
+    meetingReports: number
   }
 
   export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1699,6 +1791,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: boolean | ProjectCountOutputTypeCountSourceCodeEmbeddingsArgs
     savedQuestions?: boolean | ProjectCountOutputTypeCountSavedQuestionsArgs
     meetings?: boolean | ProjectCountOutputTypeCountMeetingsArgs
+    meetingReports?: boolean | ProjectCountOutputTypeCountMeetingReportsArgs
   }
 
   // Custom InputTypes
@@ -1745,6 +1838,13 @@ export namespace Prisma {
    */
   export type ProjectCountOutputTypeCountMeetingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MeetingWhereInput
+  }
+
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeCountMeetingReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MeetingReportWhereInput
   }
 
 
@@ -7507,6 +7607,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: boolean | Project$sourceCodeEmbeddingsArgs<ExtArgs>
     savedQuestions?: boolean | Project$savedQuestionsArgs<ExtArgs>
     meetings?: boolean | Project$meetingsArgs<ExtArgs>
+    meetingReports?: boolean | Project$meetingReportsArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
@@ -7544,6 +7645,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: boolean | Project$sourceCodeEmbeddingsArgs<ExtArgs>
     savedQuestions?: boolean | Project$savedQuestionsArgs<ExtArgs>
     meetings?: boolean | Project$meetingsArgs<ExtArgs>
+    meetingReports?: boolean | Project$meetingReportsArgs<ExtArgs>
     _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -7557,6 +7659,7 @@ export namespace Prisma {
       sourceCodeEmbeddings: Prisma.$SourceCodeEmbeddingPayload<ExtArgs>[]
       savedQuestions: Prisma.$QuestionPayload<ExtArgs>[]
       meetings: Prisma.$MeetingPayload<ExtArgs>[]
+      meetingReports: Prisma.$MeetingReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7964,6 +8067,7 @@ export namespace Prisma {
     sourceCodeEmbeddings<T extends Project$sourceCodeEmbeddingsArgs<ExtArgs> = {}>(args?: Subset<T, Project$sourceCodeEmbeddingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SourceCodeEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     savedQuestions<T extends Project$savedQuestionsArgs<ExtArgs> = {}>(args?: Subset<T, Project$savedQuestionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     meetings<T extends Project$meetingsArgs<ExtArgs> = {}>(args?: Subset<T, Project$meetingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeetingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    meetingReports<T extends Project$meetingReportsArgs<ExtArgs> = {}>(args?: Subset<T, Project$meetingReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8504,6 +8608,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MeetingScalarFieldEnum | MeetingScalarFieldEnum[]
+  }
+
+  /**
+   * Project.meetingReports
+   */
+  export type Project$meetingReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    where?: MeetingReportWhereInput
+    orderBy?: MeetingReportOrderByWithRelationInput | MeetingReportOrderByWithRelationInput[]
+    cursor?: MeetingReportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MeetingReportScalarFieldEnum | MeetingReportScalarFieldEnum[]
   }
 
   /**
@@ -10715,6 +10843,1095 @@ export namespace Prisma {
 
 
   /**
+   * Model MeetingReport
+   */
+
+  export type AggregateMeetingReport = {
+    _count: MeetingReportCountAggregateOutputType | null
+    _min: MeetingReportMinAggregateOutputType | null
+    _max: MeetingReportMaxAggregateOutputType | null
+  }
+
+  export type MeetingReportMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    name: string | null
+    projectId: string | null
+    evaluation: string | null
+  }
+
+  export type MeetingReportMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    name: string | null
+    projectId: string | null
+    evaluation: string | null
+  }
+
+  export type MeetingReportCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    name: number
+    projectId: number
+    toDos: number
+    nextSteps: number
+    evaluation: number
+    _all: number
+  }
+
+
+  export type MeetingReportMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    projectId?: true
+    evaluation?: true
+  }
+
+  export type MeetingReportMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    projectId?: true
+    evaluation?: true
+  }
+
+  export type MeetingReportCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    projectId?: true
+    toDos?: true
+    nextSteps?: true
+    evaluation?: true
+    _all?: true
+  }
+
+  export type MeetingReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MeetingReport to aggregate.
+     */
+    where?: MeetingReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingReports to fetch.
+     */
+    orderBy?: MeetingReportOrderByWithRelationInput | MeetingReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MeetingReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MeetingReports
+    **/
+    _count?: true | MeetingReportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MeetingReportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MeetingReportMaxAggregateInputType
+  }
+
+  export type GetMeetingReportAggregateType<T extends MeetingReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateMeetingReport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMeetingReport[P]>
+      : GetScalarType<T[P], AggregateMeetingReport[P]>
+  }
+
+
+
+
+  export type MeetingReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MeetingReportWhereInput
+    orderBy?: MeetingReportOrderByWithAggregationInput | MeetingReportOrderByWithAggregationInput[]
+    by: MeetingReportScalarFieldEnum[] | MeetingReportScalarFieldEnum
+    having?: MeetingReportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MeetingReportCountAggregateInputType | true
+    _min?: MeetingReportMinAggregateInputType
+    _max?: MeetingReportMaxAggregateInputType
+  }
+
+  export type MeetingReportGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    name: string
+    projectId: string
+    toDos: JsonValue | null
+    nextSteps: string[]
+    evaluation: string | null
+    _count: MeetingReportCountAggregateOutputType | null
+    _min: MeetingReportMinAggregateOutputType | null
+    _max: MeetingReportMaxAggregateOutputType | null
+  }
+
+  type GetMeetingReportGroupByPayload<T extends MeetingReportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MeetingReportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MeetingReportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MeetingReportGroupByOutputType[P]>
+            : GetScalarType<T[P], MeetingReportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MeetingReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    projectId?: boolean
+    toDos?: boolean
+    nextSteps?: boolean
+    evaluation?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["meetingReport"]>
+
+  export type MeetingReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    projectId?: boolean
+    toDos?: boolean
+    nextSteps?: boolean
+    evaluation?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["meetingReport"]>
+
+  export type MeetingReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    projectId?: boolean
+    toDos?: boolean
+    nextSteps?: boolean
+    evaluation?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["meetingReport"]>
+
+  export type MeetingReportSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    projectId?: boolean
+    toDos?: boolean
+    nextSteps?: boolean
+    evaluation?: boolean
+  }
+
+  export type MeetingReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "name" | "projectId" | "toDos" | "nextSteps" | "evaluation", ExtArgs["result"]["meetingReport"]>
+  export type MeetingReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+  export type MeetingReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+  export type MeetingReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+
+  export type $MeetingReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MeetingReport"
+    objects: {
+      project: Prisma.$ProjectPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      name: string
+      projectId: string
+      toDos: Prisma.JsonValue | null
+      nextSteps: string[]
+      evaluation: string | null
+    }, ExtArgs["result"]["meetingReport"]>
+    composites: {}
+  }
+
+  type MeetingReportGetPayload<S extends boolean | null | undefined | MeetingReportDefaultArgs> = $Result.GetResult<Prisma.$MeetingReportPayload, S>
+
+  type MeetingReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MeetingReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MeetingReportCountAggregateInputType | true
+    }
+
+  export interface MeetingReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MeetingReport'], meta: { name: 'MeetingReport' } }
+    /**
+     * Find zero or one MeetingReport that matches the filter.
+     * @param {MeetingReportFindUniqueArgs} args - Arguments to find a MeetingReport
+     * @example
+     * // Get one MeetingReport
+     * const meetingReport = await prisma.meetingReport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MeetingReportFindUniqueArgs>(args: SelectSubset<T, MeetingReportFindUniqueArgs<ExtArgs>>): Prisma__MeetingReportClient<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MeetingReport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MeetingReportFindUniqueOrThrowArgs} args - Arguments to find a MeetingReport
+     * @example
+     * // Get one MeetingReport
+     * const meetingReport = await prisma.meetingReport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MeetingReportFindUniqueOrThrowArgs>(args: SelectSubset<T, MeetingReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MeetingReportClient<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MeetingReport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingReportFindFirstArgs} args - Arguments to find a MeetingReport
+     * @example
+     * // Get one MeetingReport
+     * const meetingReport = await prisma.meetingReport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MeetingReportFindFirstArgs>(args?: SelectSubset<T, MeetingReportFindFirstArgs<ExtArgs>>): Prisma__MeetingReportClient<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MeetingReport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingReportFindFirstOrThrowArgs} args - Arguments to find a MeetingReport
+     * @example
+     * // Get one MeetingReport
+     * const meetingReport = await prisma.meetingReport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MeetingReportFindFirstOrThrowArgs>(args?: SelectSubset<T, MeetingReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__MeetingReportClient<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MeetingReports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingReportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MeetingReports
+     * const meetingReports = await prisma.meetingReport.findMany()
+     * 
+     * // Get first 10 MeetingReports
+     * const meetingReports = await prisma.meetingReport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const meetingReportWithIdOnly = await prisma.meetingReport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MeetingReportFindManyArgs>(args?: SelectSubset<T, MeetingReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MeetingReport.
+     * @param {MeetingReportCreateArgs} args - Arguments to create a MeetingReport.
+     * @example
+     * // Create one MeetingReport
+     * const MeetingReport = await prisma.meetingReport.create({
+     *   data: {
+     *     // ... data to create a MeetingReport
+     *   }
+     * })
+     * 
+     */
+    create<T extends MeetingReportCreateArgs>(args: SelectSubset<T, MeetingReportCreateArgs<ExtArgs>>): Prisma__MeetingReportClient<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MeetingReports.
+     * @param {MeetingReportCreateManyArgs} args - Arguments to create many MeetingReports.
+     * @example
+     * // Create many MeetingReports
+     * const meetingReport = await prisma.meetingReport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MeetingReportCreateManyArgs>(args?: SelectSubset<T, MeetingReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MeetingReports and returns the data saved in the database.
+     * @param {MeetingReportCreateManyAndReturnArgs} args - Arguments to create many MeetingReports.
+     * @example
+     * // Create many MeetingReports
+     * const meetingReport = await prisma.meetingReport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MeetingReports and only return the `id`
+     * const meetingReportWithIdOnly = await prisma.meetingReport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MeetingReportCreateManyAndReturnArgs>(args?: SelectSubset<T, MeetingReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MeetingReport.
+     * @param {MeetingReportDeleteArgs} args - Arguments to delete one MeetingReport.
+     * @example
+     * // Delete one MeetingReport
+     * const MeetingReport = await prisma.meetingReport.delete({
+     *   where: {
+     *     // ... filter to delete one MeetingReport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MeetingReportDeleteArgs>(args: SelectSubset<T, MeetingReportDeleteArgs<ExtArgs>>): Prisma__MeetingReportClient<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MeetingReport.
+     * @param {MeetingReportUpdateArgs} args - Arguments to update one MeetingReport.
+     * @example
+     * // Update one MeetingReport
+     * const meetingReport = await prisma.meetingReport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MeetingReportUpdateArgs>(args: SelectSubset<T, MeetingReportUpdateArgs<ExtArgs>>): Prisma__MeetingReportClient<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MeetingReports.
+     * @param {MeetingReportDeleteManyArgs} args - Arguments to filter MeetingReports to delete.
+     * @example
+     * // Delete a few MeetingReports
+     * const { count } = await prisma.meetingReport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MeetingReportDeleteManyArgs>(args?: SelectSubset<T, MeetingReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MeetingReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingReportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MeetingReports
+     * const meetingReport = await prisma.meetingReport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MeetingReportUpdateManyArgs>(args: SelectSubset<T, MeetingReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MeetingReports and returns the data updated in the database.
+     * @param {MeetingReportUpdateManyAndReturnArgs} args - Arguments to update many MeetingReports.
+     * @example
+     * // Update many MeetingReports
+     * const meetingReport = await prisma.meetingReport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MeetingReports and only return the `id`
+     * const meetingReportWithIdOnly = await prisma.meetingReport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MeetingReportUpdateManyAndReturnArgs>(args: SelectSubset<T, MeetingReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MeetingReport.
+     * @param {MeetingReportUpsertArgs} args - Arguments to update or create a MeetingReport.
+     * @example
+     * // Update or create a MeetingReport
+     * const meetingReport = await prisma.meetingReport.upsert({
+     *   create: {
+     *     // ... data to create a MeetingReport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MeetingReport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MeetingReportUpsertArgs>(args: SelectSubset<T, MeetingReportUpsertArgs<ExtArgs>>): Prisma__MeetingReportClient<$Result.GetResult<Prisma.$MeetingReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MeetingReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingReportCountArgs} args - Arguments to filter MeetingReports to count.
+     * @example
+     * // Count the number of MeetingReports
+     * const count = await prisma.meetingReport.count({
+     *   where: {
+     *     // ... the filter for the MeetingReports we want to count
+     *   }
+     * })
+    **/
+    count<T extends MeetingReportCountArgs>(
+      args?: Subset<T, MeetingReportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MeetingReportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MeetingReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MeetingReportAggregateArgs>(args: Subset<T, MeetingReportAggregateArgs>): Prisma.PrismaPromise<GetMeetingReportAggregateType<T>>
+
+    /**
+     * Group by MeetingReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MeetingReportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MeetingReportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MeetingReportGroupByArgs['orderBy'] }
+        : { orderBy?: MeetingReportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MeetingReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMeetingReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MeetingReport model
+   */
+  readonly fields: MeetingReportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MeetingReport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MeetingReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MeetingReport model
+   */
+  interface MeetingReportFieldRefs {
+    readonly id: FieldRef<"MeetingReport", 'String'>
+    readonly createdAt: FieldRef<"MeetingReport", 'DateTime'>
+    readonly updatedAt: FieldRef<"MeetingReport", 'DateTime'>
+    readonly name: FieldRef<"MeetingReport", 'String'>
+    readonly projectId: FieldRef<"MeetingReport", 'String'>
+    readonly toDos: FieldRef<"MeetingReport", 'Json'>
+    readonly nextSteps: FieldRef<"MeetingReport", 'String[]'>
+    readonly evaluation: FieldRef<"MeetingReport", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MeetingReport findUnique
+   */
+  export type MeetingReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * Filter, which MeetingReport to fetch.
+     */
+    where: MeetingReportWhereUniqueInput
+  }
+
+  /**
+   * MeetingReport findUniqueOrThrow
+   */
+  export type MeetingReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * Filter, which MeetingReport to fetch.
+     */
+    where: MeetingReportWhereUniqueInput
+  }
+
+  /**
+   * MeetingReport findFirst
+   */
+  export type MeetingReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * Filter, which MeetingReport to fetch.
+     */
+    where?: MeetingReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingReports to fetch.
+     */
+    orderBy?: MeetingReportOrderByWithRelationInput | MeetingReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingReports.
+     */
+    cursor?: MeetingReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingReports.
+     */
+    distinct?: MeetingReportScalarFieldEnum | MeetingReportScalarFieldEnum[]
+  }
+
+  /**
+   * MeetingReport findFirstOrThrow
+   */
+  export type MeetingReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * Filter, which MeetingReport to fetch.
+     */
+    where?: MeetingReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingReports to fetch.
+     */
+    orderBy?: MeetingReportOrderByWithRelationInput | MeetingReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MeetingReports.
+     */
+    cursor?: MeetingReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MeetingReports.
+     */
+    distinct?: MeetingReportScalarFieldEnum | MeetingReportScalarFieldEnum[]
+  }
+
+  /**
+   * MeetingReport findMany
+   */
+  export type MeetingReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * Filter, which MeetingReports to fetch.
+     */
+    where?: MeetingReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MeetingReports to fetch.
+     */
+    orderBy?: MeetingReportOrderByWithRelationInput | MeetingReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MeetingReports.
+     */
+    cursor?: MeetingReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MeetingReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MeetingReports.
+     */
+    skip?: number
+    distinct?: MeetingReportScalarFieldEnum | MeetingReportScalarFieldEnum[]
+  }
+
+  /**
+   * MeetingReport create
+   */
+  export type MeetingReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MeetingReport.
+     */
+    data: XOR<MeetingReportCreateInput, MeetingReportUncheckedCreateInput>
+  }
+
+  /**
+   * MeetingReport createMany
+   */
+  export type MeetingReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MeetingReports.
+     */
+    data: MeetingReportCreateManyInput | MeetingReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MeetingReport createManyAndReturn
+   */
+  export type MeetingReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * The data used to create many MeetingReports.
+     */
+    data: MeetingReportCreateManyInput | MeetingReportCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MeetingReport update
+   */
+  export type MeetingReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MeetingReport.
+     */
+    data: XOR<MeetingReportUpdateInput, MeetingReportUncheckedUpdateInput>
+    /**
+     * Choose, which MeetingReport to update.
+     */
+    where: MeetingReportWhereUniqueInput
+  }
+
+  /**
+   * MeetingReport updateMany
+   */
+  export type MeetingReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MeetingReports.
+     */
+    data: XOR<MeetingReportUpdateManyMutationInput, MeetingReportUncheckedUpdateManyInput>
+    /**
+     * Filter which MeetingReports to update
+     */
+    where?: MeetingReportWhereInput
+    /**
+     * Limit how many MeetingReports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MeetingReport updateManyAndReturn
+   */
+  export type MeetingReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * The data used to update MeetingReports.
+     */
+    data: XOR<MeetingReportUpdateManyMutationInput, MeetingReportUncheckedUpdateManyInput>
+    /**
+     * Filter which MeetingReports to update
+     */
+    where?: MeetingReportWhereInput
+    /**
+     * Limit how many MeetingReports to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MeetingReport upsert
+   */
+  export type MeetingReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MeetingReport to update in case it exists.
+     */
+    where: MeetingReportWhereUniqueInput
+    /**
+     * In case the MeetingReport found by the `where` argument doesn't exist, create a new MeetingReport with this data.
+     */
+    create: XOR<MeetingReportCreateInput, MeetingReportUncheckedCreateInput>
+    /**
+     * In case the MeetingReport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MeetingReportUpdateInput, MeetingReportUncheckedUpdateInput>
+  }
+
+  /**
+   * MeetingReport delete
+   */
+  export type MeetingReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+    /**
+     * Filter which MeetingReport to delete.
+     */
+    where: MeetingReportWhereUniqueInput
+  }
+
+  /**
+   * MeetingReport deleteMany
+   */
+  export type MeetingReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MeetingReports to delete
+     */
+    where?: MeetingReportWhereInput
+    /**
+     * Limit how many MeetingReports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MeetingReport without action
+   */
+  export type MeetingReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MeetingReport
+     */
+    select?: MeetingReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MeetingReport
+     */
+    omit?: MeetingReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MeetingReportInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model SourceCodeEmbedding
    */
 
@@ -11892,6 +13109,20 @@ export namespace Prisma {
   export type CommitScalarFieldEnum = (typeof CommitScalarFieldEnum)[keyof typeof CommitScalarFieldEnum]
 
 
+  export const MeetingReportScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    name: 'name',
+    projectId: 'projectId',
+    toDos: 'toDos',
+    nextSteps: 'nextSteps',
+    evaluation: 'evaluation'
+  };
+
+  export type MeetingReportScalarFieldEnum = (typeof MeetingReportScalarFieldEnum)[keyof typeof MeetingReportScalarFieldEnum]
+
+
   export const SourceCodeEmbeddingScalarFieldEnum: {
     id: 'id',
     sourceCode: 'sourceCode',
@@ -12400,6 +13631,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingListRelationFilter
     savedQuestions?: QuestionListRelationFilter
     meetings?: MeetingListRelationFilter
+    meetingReports?: MeetingReportListRelationFilter
   }
 
   export type ProjectOrderByWithRelationInput = {
@@ -12414,6 +13646,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingOrderByRelationAggregateInput
     savedQuestions?: QuestionOrderByRelationAggregateInput
     meetings?: MeetingOrderByRelationAggregateInput
+    meetingReports?: MeetingReportOrderByRelationAggregateInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -12431,6 +13664,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingListRelationFilter
     savedQuestions?: QuestionListRelationFilter
     meetings?: MeetingListRelationFilter
+    meetingReports?: MeetingReportListRelationFilter
   }, "id">
 
   export type ProjectOrderByWithAggregationInput = {
@@ -12593,6 +13827,76 @@ export namespace Prisma {
     commitAuthorAvatar?: StringWithAggregatesFilter<"Commit"> | string
     commitDate?: DateTimeWithAggregatesFilter<"Commit"> | Date | string
     summary?: StringWithAggregatesFilter<"Commit"> | string
+  }
+
+  export type MeetingReportWhereInput = {
+    AND?: MeetingReportWhereInput | MeetingReportWhereInput[]
+    OR?: MeetingReportWhereInput[]
+    NOT?: MeetingReportWhereInput | MeetingReportWhereInput[]
+    id?: StringFilter<"MeetingReport"> | string
+    createdAt?: DateTimeFilter<"MeetingReport"> | Date | string
+    updatedAt?: DateTimeFilter<"MeetingReport"> | Date | string
+    name?: StringFilter<"MeetingReport"> | string
+    projectId?: StringFilter<"MeetingReport"> | string
+    toDos?: JsonNullableFilter<"MeetingReport">
+    nextSteps?: StringNullableListFilter<"MeetingReport">
+    evaluation?: StringNullableFilter<"MeetingReport"> | string | null
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+  }
+
+  export type MeetingReportOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    projectId?: SortOrder
+    toDos?: SortOrderInput | SortOrder
+    nextSteps?: SortOrder
+    evaluation?: SortOrderInput | SortOrder
+    project?: ProjectOrderByWithRelationInput
+  }
+
+  export type MeetingReportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MeetingReportWhereInput | MeetingReportWhereInput[]
+    OR?: MeetingReportWhereInput[]
+    NOT?: MeetingReportWhereInput | MeetingReportWhereInput[]
+    createdAt?: DateTimeFilter<"MeetingReport"> | Date | string
+    updatedAt?: DateTimeFilter<"MeetingReport"> | Date | string
+    name?: StringFilter<"MeetingReport"> | string
+    projectId?: StringFilter<"MeetingReport"> | string
+    toDos?: JsonNullableFilter<"MeetingReport">
+    nextSteps?: StringNullableListFilter<"MeetingReport">
+    evaluation?: StringNullableFilter<"MeetingReport"> | string | null
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+  }, "id">
+
+  export type MeetingReportOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    projectId?: SortOrder
+    toDos?: SortOrderInput | SortOrder
+    nextSteps?: SortOrder
+    evaluation?: SortOrderInput | SortOrder
+    _count?: MeetingReportCountOrderByAggregateInput
+    _max?: MeetingReportMaxOrderByAggregateInput
+    _min?: MeetingReportMinOrderByAggregateInput
+  }
+
+  export type MeetingReportScalarWhereWithAggregatesInput = {
+    AND?: MeetingReportScalarWhereWithAggregatesInput | MeetingReportScalarWhereWithAggregatesInput[]
+    OR?: MeetingReportScalarWhereWithAggregatesInput[]
+    NOT?: MeetingReportScalarWhereWithAggregatesInput | MeetingReportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MeetingReport"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"MeetingReport"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MeetingReport"> | Date | string
+    name?: StringWithAggregatesFilter<"MeetingReport"> | string
+    projectId?: StringWithAggregatesFilter<"MeetingReport"> | string
+    toDos?: JsonNullableWithAggregatesFilter<"MeetingReport">
+    nextSteps?: StringNullableListFilter<"MeetingReport">
+    evaluation?: StringNullableWithAggregatesFilter<"MeetingReport"> | string | null
   }
 
   export type SourceCodeEmbeddingWhereInput = {
@@ -13037,6 +14341,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionCreateNestedManyWithoutProjectInput
     meetings?: MeetingCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateInput = {
@@ -13051,6 +14356,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionUncheckedCreateNestedManyWithoutProjectInput
     meetings?: MeetingUncheckedCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUpdateInput = {
@@ -13065,6 +14371,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
@@ -13079,6 +14386,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUncheckedUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUncheckedUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateManyInput = {
@@ -13250,6 +14558,82 @@ export namespace Prisma {
     commitAuthorAvatar?: StringFieldUpdateOperationsInput | string
     commitDate?: DateTimeFieldUpdateOperationsInput | Date | string
     summary?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MeetingReportCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportCreatenextStepsInput | string[]
+    evaluation?: string | null
+    project: ProjectCreateNestedOneWithoutMeetingReportsInput
+  }
+
+  export type MeetingReportUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    projectId: string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportCreatenextStepsInput | string[]
+    evaluation?: string | null
+  }
+
+  export type MeetingReportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportUpdatenextStepsInput | string[]
+    evaluation?: NullableStringFieldUpdateOperationsInput | string | null
+    project?: ProjectUpdateOneRequiredWithoutMeetingReportsNestedInput
+  }
+
+  export type MeetingReportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportUpdatenextStepsInput | string[]
+    evaluation?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MeetingReportCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    projectId: string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportCreatenextStepsInput | string[]
+    evaluation?: string | null
+  }
+
+  export type MeetingReportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportUpdatenextStepsInput | string[]
+    evaluation?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MeetingReportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportUpdatenextStepsInput | string[]
+    evaluation?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SourceCodeEmbeddingCreateInput = {
@@ -13748,6 +15132,12 @@ export namespace Prisma {
     none?: MeetingWhereInput
   }
 
+  export type MeetingReportListRelationFilter = {
+    every?: MeetingReportWhereInput
+    some?: MeetingReportWhereInput
+    none?: MeetingReportWhereInput
+  }
+
   export type CommitOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -13757,6 +15147,10 @@ export namespace Prisma {
   }
 
   export type MeetingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MeetingReportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13862,6 +15256,35 @@ export namespace Prisma {
     commitAuthorAvatar?: SortOrder
     commitDate?: SortOrder
     summary?: SortOrder
+  }
+
+  export type MeetingReportCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    projectId?: SortOrder
+    toDos?: SortOrder
+    nextSteps?: SortOrder
+    evaluation?: SortOrder
+  }
+
+  export type MeetingReportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    projectId?: SortOrder
+    evaluation?: SortOrder
+  }
+
+  export type MeetingReportMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    projectId?: SortOrder
+    evaluation?: SortOrder
   }
 
   export type SourceCodeEmbeddingCountOrderByAggregateInput = {
@@ -14194,6 +15617,13 @@ export namespace Prisma {
     connect?: MeetingWhereUniqueInput | MeetingWhereUniqueInput[]
   }
 
+  export type MeetingReportCreateNestedManyWithoutProjectInput = {
+    create?: XOR<MeetingReportCreateWithoutProjectInput, MeetingReportUncheckedCreateWithoutProjectInput> | MeetingReportCreateWithoutProjectInput[] | MeetingReportUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: MeetingReportCreateOrConnectWithoutProjectInput | MeetingReportCreateOrConnectWithoutProjectInput[]
+    createMany?: MeetingReportCreateManyProjectInputEnvelope
+    connect?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+  }
+
   export type UserToProjectUncheckedCreateNestedManyWithoutProjectInput = {
     create?: XOR<UserToProjectCreateWithoutProjectInput, UserToProjectUncheckedCreateWithoutProjectInput> | UserToProjectCreateWithoutProjectInput[] | UserToProjectUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutProjectInput | UserToProjectCreateOrConnectWithoutProjectInput[]
@@ -14227,6 +15657,13 @@ export namespace Prisma {
     connectOrCreate?: MeetingCreateOrConnectWithoutProjectInput | MeetingCreateOrConnectWithoutProjectInput[]
     createMany?: MeetingCreateManyProjectInputEnvelope
     connect?: MeetingWhereUniqueInput | MeetingWhereUniqueInput[]
+  }
+
+  export type MeetingReportUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<MeetingReportCreateWithoutProjectInput, MeetingReportUncheckedCreateWithoutProjectInput> | MeetingReportCreateWithoutProjectInput[] | MeetingReportUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: MeetingReportCreateOrConnectWithoutProjectInput | MeetingReportCreateOrConnectWithoutProjectInput[]
+    createMany?: MeetingReportCreateManyProjectInputEnvelope
+    connect?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -14303,6 +15740,20 @@ export namespace Prisma {
     deleteMany?: MeetingScalarWhereInput | MeetingScalarWhereInput[]
   }
 
+  export type MeetingReportUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<MeetingReportCreateWithoutProjectInput, MeetingReportUncheckedCreateWithoutProjectInput> | MeetingReportCreateWithoutProjectInput[] | MeetingReportUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: MeetingReportCreateOrConnectWithoutProjectInput | MeetingReportCreateOrConnectWithoutProjectInput[]
+    upsert?: MeetingReportUpsertWithWhereUniqueWithoutProjectInput | MeetingReportUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: MeetingReportCreateManyProjectInputEnvelope
+    set?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+    disconnect?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+    delete?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+    connect?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+    update?: MeetingReportUpdateWithWhereUniqueWithoutProjectInput | MeetingReportUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: MeetingReportUpdateManyWithWhereWithoutProjectInput | MeetingReportUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: MeetingReportScalarWhereInput | MeetingReportScalarWhereInput[]
+  }
+
   export type UserToProjectUncheckedUpdateManyWithoutProjectNestedInput = {
     create?: XOR<UserToProjectCreateWithoutProjectInput, UserToProjectUncheckedCreateWithoutProjectInput> | UserToProjectCreateWithoutProjectInput[] | UserToProjectUncheckedCreateWithoutProjectInput[]
     connectOrCreate?: UserToProjectCreateOrConnectWithoutProjectInput | UserToProjectCreateOrConnectWithoutProjectInput[]
@@ -14373,6 +15824,20 @@ export namespace Prisma {
     deleteMany?: MeetingScalarWhereInput | MeetingScalarWhereInput[]
   }
 
+  export type MeetingReportUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<MeetingReportCreateWithoutProjectInput, MeetingReportUncheckedCreateWithoutProjectInput> | MeetingReportCreateWithoutProjectInput[] | MeetingReportUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: MeetingReportCreateOrConnectWithoutProjectInput | MeetingReportCreateOrConnectWithoutProjectInput[]
+    upsert?: MeetingReportUpsertWithWhereUniqueWithoutProjectInput | MeetingReportUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: MeetingReportCreateManyProjectInputEnvelope
+    set?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+    disconnect?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+    delete?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+    connect?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
+    update?: MeetingReportUpdateWithWhereUniqueWithoutProjectInput | MeetingReportUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: MeetingReportUpdateManyWithWhereWithoutProjectInput | MeetingReportUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: MeetingReportScalarWhereInput | MeetingReportScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutUserToProjectsInput = {
     create?: XOR<UserCreateWithoutUserToProjectsInput, UserUncheckedCreateWithoutUserToProjectsInput>
     connectOrCreate?: UserCreateOrConnectWithoutUserToProjectsInput
@@ -14413,6 +15878,29 @@ export namespace Prisma {
     upsert?: ProjectUpsertWithoutCommitsInput
     connect?: ProjectWhereUniqueInput
     update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutCommitsInput, ProjectUpdateWithoutCommitsInput>, ProjectUncheckedUpdateWithoutCommitsInput>
+  }
+
+  export type MeetingReportCreatenextStepsInput = {
+    set: string[]
+  }
+
+  export type ProjectCreateNestedOneWithoutMeetingReportsInput = {
+    create?: XOR<ProjectCreateWithoutMeetingReportsInput, ProjectUncheckedCreateWithoutMeetingReportsInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutMeetingReportsInput
+    connect?: ProjectWhereUniqueInput
+  }
+
+  export type MeetingReportUpdatenextStepsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ProjectUpdateOneRequiredWithoutMeetingReportsNestedInput = {
+    create?: XOR<ProjectCreateWithoutMeetingReportsInput, ProjectUncheckedCreateWithoutMeetingReportsInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutMeetingReportsInput
+    upsert?: ProjectUpsertWithoutMeetingReportsInput
+    connect?: ProjectWhereUniqueInput
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutMeetingReportsInput, ProjectUpdateWithoutMeetingReportsInput>, ProjectUncheckedUpdateWithoutMeetingReportsInput>
   }
 
   export type ProjectCreateNestedOneWithoutSourceCodeEmbeddingsInput = {
@@ -14641,6 +16129,7 @@ export namespace Prisma {
     commits?: CommitCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutMeetingsInput = {
@@ -14654,6 +16143,7 @@ export namespace Prisma {
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionUncheckedCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutMeetingsInput = {
@@ -14715,6 +16205,7 @@ export namespace Prisma {
     commits?: CommitUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutMeetingsInput = {
@@ -14728,6 +16219,7 @@ export namespace Prisma {
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUncheckedUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type IssueUpsertWithWhereUniqueWithoutMeetingInput = {
@@ -15055,6 +16547,7 @@ export namespace Prisma {
     commits?: CommitCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
     meetings?: MeetingCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutSavedQuestionsInput = {
@@ -15068,6 +16561,7 @@ export namespace Prisma {
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
     meetings?: MeetingUncheckedCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutSavedQuestionsInput = {
@@ -15122,6 +16616,7 @@ export namespace Prisma {
     commits?: CommitUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutSavedQuestionsInput = {
@@ -15135,6 +16630,7 @@ export namespace Prisma {
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUncheckedUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type UserUpsertWithoutQuestionsAskedInput = {
@@ -15310,6 +16806,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MeetingReportCreateWithoutProjectInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportCreatenextStepsInput | string[]
+    evaluation?: string | null
+  }
+
+  export type MeetingReportUncheckedCreateWithoutProjectInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportCreatenextStepsInput | string[]
+    evaluation?: string | null
+  }
+
+  export type MeetingReportCreateOrConnectWithoutProjectInput = {
+    where: MeetingReportWhereUniqueInput
+    create: XOR<MeetingReportCreateWithoutProjectInput, MeetingReportUncheckedCreateWithoutProjectInput>
+  }
+
+  export type MeetingReportCreateManyProjectInputEnvelope = {
+    data: MeetingReportCreateManyProjectInput | MeetingReportCreateManyProjectInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserToProjectUpsertWithWhereUniqueWithoutProjectInput = {
     where: UserToProjectWhereUniqueInput
     update: XOR<UserToProjectUpdateWithoutProjectInput, UserToProjectUncheckedUpdateWithoutProjectInput>
@@ -15430,6 +16956,36 @@ export namespace Prisma {
     status?: EnumMeetingStatusFilter<"Meeting"> | $Enums.MeetingStatus
   }
 
+  export type MeetingReportUpsertWithWhereUniqueWithoutProjectInput = {
+    where: MeetingReportWhereUniqueInput
+    update: XOR<MeetingReportUpdateWithoutProjectInput, MeetingReportUncheckedUpdateWithoutProjectInput>
+    create: XOR<MeetingReportCreateWithoutProjectInput, MeetingReportUncheckedCreateWithoutProjectInput>
+  }
+
+  export type MeetingReportUpdateWithWhereUniqueWithoutProjectInput = {
+    where: MeetingReportWhereUniqueInput
+    data: XOR<MeetingReportUpdateWithoutProjectInput, MeetingReportUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type MeetingReportUpdateManyWithWhereWithoutProjectInput = {
+    where: MeetingReportScalarWhereInput
+    data: XOR<MeetingReportUpdateManyMutationInput, MeetingReportUncheckedUpdateManyWithoutProjectInput>
+  }
+
+  export type MeetingReportScalarWhereInput = {
+    AND?: MeetingReportScalarWhereInput | MeetingReportScalarWhereInput[]
+    OR?: MeetingReportScalarWhereInput[]
+    NOT?: MeetingReportScalarWhereInput | MeetingReportScalarWhereInput[]
+    id?: StringFilter<"MeetingReport"> | string
+    createdAt?: DateTimeFilter<"MeetingReport"> | Date | string
+    updatedAt?: DateTimeFilter<"MeetingReport"> | Date | string
+    name?: StringFilter<"MeetingReport"> | string
+    projectId?: StringFilter<"MeetingReport"> | string
+    toDos?: JsonNullableFilter<"MeetingReport">
+    nextSteps?: StringNullableListFilter<"MeetingReport">
+    evaluation?: StringNullableFilter<"MeetingReport"> | string | null
+  }
+
   export type UserCreateWithoutUserToProjectsInput = {
     id?: string
     emailAddress: string
@@ -15466,6 +17022,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionCreateNestedManyWithoutProjectInput
     meetings?: MeetingCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutUserToProjectsInput = {
@@ -15479,6 +17036,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionUncheckedCreateNestedManyWithoutProjectInput
     meetings?: MeetingUncheckedCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutUserToProjectsInput = {
@@ -15539,6 +17097,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutUserToProjectsInput = {
@@ -15552,6 +17111,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUncheckedUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUncheckedUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateWithoutCommitsInput = {
@@ -15565,6 +17125,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionCreateNestedManyWithoutProjectInput
     meetings?: MeetingCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutCommitsInput = {
@@ -15578,6 +17139,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionUncheckedCreateNestedManyWithoutProjectInput
     meetings?: MeetingUncheckedCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutCommitsInput = {
@@ -15607,6 +17169,7 @@ export namespace Prisma {
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutCommitsInput = {
@@ -15617,6 +17180,79 @@ export namespace Prisma {
     githubUrl?: StringFieldUpdateOperationsInput | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
+    sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QuestionUncheckedUpdateManyWithoutProjectNestedInput
+    meetings?: MeetingUncheckedUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUncheckedUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectCreateWithoutMeetingReportsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    githubUrl: string
+    deletedAt?: Date | string | null
+    userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
+    commits?: CommitCreateNestedManyWithoutProjectInput
+    sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
+    savedQuestions?: QuestionCreateNestedManyWithoutProjectInput
+    meetings?: MeetingCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectUncheckedCreateWithoutMeetingReportsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    githubUrl: string
+    deletedAt?: Date | string | null
+    userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
+    commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
+    sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
+    savedQuestions?: QuestionUncheckedCreateNestedManyWithoutProjectInput
+    meetings?: MeetingUncheckedCreateNestedManyWithoutProjectInput
+  }
+
+  export type ProjectCreateOrConnectWithoutMeetingReportsInput = {
+    where: ProjectWhereUniqueInput
+    create: XOR<ProjectCreateWithoutMeetingReportsInput, ProjectUncheckedCreateWithoutMeetingReportsInput>
+  }
+
+  export type ProjectUpsertWithoutMeetingReportsInput = {
+    update: XOR<ProjectUpdateWithoutMeetingReportsInput, ProjectUncheckedUpdateWithoutMeetingReportsInput>
+    create: XOR<ProjectCreateWithoutMeetingReportsInput, ProjectUncheckedCreateWithoutMeetingReportsInput>
+    where?: ProjectWhereInput
+  }
+
+  export type ProjectUpdateToOneWithWhereWithoutMeetingReportsInput = {
+    where?: ProjectWhereInput
+    data: XOR<ProjectUpdateWithoutMeetingReportsInput, ProjectUncheckedUpdateWithoutMeetingReportsInput>
+  }
+
+  export type ProjectUpdateWithoutMeetingReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    githubUrl?: StringFieldUpdateOperationsInput | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
+    commits?: CommitUpdateManyWithoutProjectNestedInput
+    sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
+    savedQuestions?: QuestionUpdateManyWithoutProjectNestedInput
+    meetings?: MeetingUpdateManyWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateWithoutMeetingReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    githubUrl?: StringFieldUpdateOperationsInput | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
+    commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUncheckedUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUncheckedUpdateManyWithoutProjectNestedInput
@@ -15633,6 +17269,7 @@ export namespace Prisma {
     commits?: CommitCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionCreateNestedManyWithoutProjectInput
     meetings?: MeetingCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutSourceCodeEmbeddingsInput = {
@@ -15646,6 +17283,7 @@ export namespace Prisma {
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
     savedQuestions?: QuestionUncheckedCreateNestedManyWithoutProjectInput
     meetings?: MeetingUncheckedCreateNestedManyWithoutProjectInput
+    meetingReports?: MeetingReportUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutSourceCodeEmbeddingsInput = {
@@ -15675,6 +17313,7 @@ export namespace Prisma {
     commits?: CommitUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutSourceCodeEmbeddingsInput = {
@@ -15688,6 +17327,7 @@ export namespace Prisma {
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
     savedQuestions?: QuestionUncheckedUpdateManyWithoutProjectNestedInput
     meetings?: MeetingUncheckedUpdateManyWithoutProjectNestedInput
+    meetingReports?: MeetingReportUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type IssueCreateManyMeetingInput = {
@@ -15887,6 +17527,16 @@ export namespace Prisma {
     status?: $Enums.MeetingStatus
   }
 
+  export type MeetingReportCreateManyProjectInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportCreatenextStepsInput | string[]
+    evaluation?: string | null
+  }
+
   export type UserToProjectUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16022,6 +17672,36 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     meetingUrl?: StringFieldUpdateOperationsInput | string
     status?: EnumMeetingStatusFieldUpdateOperationsInput | $Enums.MeetingStatus
+  }
+
+  export type MeetingReportUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportUpdatenextStepsInput | string[]
+    evaluation?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MeetingReportUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportUpdatenextStepsInput | string[]
+    evaluation?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MeetingReportUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    toDos?: NullableJsonNullValueInput | InputJsonValue
+    nextSteps?: MeetingReportUpdatenextStepsInput | string[]
+    evaluation?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

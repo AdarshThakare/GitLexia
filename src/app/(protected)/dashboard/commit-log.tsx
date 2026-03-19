@@ -8,9 +8,23 @@ import React from "react";
 
 const CommitLog = () => {
   const { projectId, project } = useProject();
+  const utils = api.useUtils();
   const { data: commits, isLoading } = api.project.getCommits.useQuery({
     projectId,
   });
+
+  const generateInsights = api.project.generateInsights.useMutation({
+    onSuccess: () => {
+      utils.project.getCommits.invalidate({ projectId });
+    },
+  });
+
+  const retryMutation = api.project.retryCommitSummary.useMutation({
+    onSuccess: () => {
+      utils.project.getCommits.invalidate({ projectId });
+    },
+  });
+
   if (isLoading) {
     return (
       <ul className="space-y-6">
@@ -44,8 +58,22 @@ const CommitLog = () => {
 
   return (
     <>
-      <ul className="space-y-6">
-        {commits?.map((commit, commitIdx) => (
+      {commits?.length === 0 ? (
+        <div className="flex flex-col items-center justify-center p-8 bg-white border border-dashed rounded-lg shadow-sm">
+          <p className="text-gray-500 mb-4 text-center">
+            Your project has been created, but insights haven't been generated yet.
+          </p>
+          <button
+            onClick={() => generateInsights.mutate({ projectId })}
+            disabled={generateInsights.isPending}
+            className="rounded-full bg-blue-600 px-6 py-2.5 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
+          >
+            {generateInsights.isPending ? "Generating..." : "Generate Summary Insights"}
+          </button>
+        </div>
+      ) : (
+        <ul className="space-y-6">
+          {commits?.map((commit, commitIdx) => (
           <li key={commit.id} className="relative flex gap-x-4">
             <div
               className={cn(
@@ -90,16 +118,26 @@ const CommitLog = () => {
                     <div className="h-3 w-full animate-pulse rounded bg-stone-100" />
                     <div className="h-3 w-5/6 animate-pulse rounded bg-stone-100" />
                     <div className="h-3 w-4/6 animate-pulse rounded bg-stone-100" />
-                    <p className="mt-1 text-[11px] text-stone-400">
-                      Generating summary…
-                    </p>
+                    <div className="mt-1 flex items-center justify-between">
+                      <p className="text-[11px] text-stone-400">
+                        {retryMutation.isPending ? "Retrying..." : "Summary not generated yet"}
+                      </p>
+                      <button
+                        onClick={() => retryMutation.mutate({ commitId: commit.id })}
+                        disabled={retryMutation.isPending}
+                        className="text-[11px] font-semibold text-blue-600 hover:text-blue-700 disabled:opacity-50"
+                      >
+                        {retryMutation.isPending ? "Regenerating..." : "Retry manually"}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
             </>
           </li>
         ))}
-      </ul>
+        </ul>
+      )}
     </>
   );
 };

@@ -203,6 +203,17 @@ exports.Prisma.CommitScalarFieldEnum = {
   summary: 'summary'
 };
 
+exports.Prisma.MeetingReportScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  projectId: 'projectId',
+  toDos: 'toDos',
+  nextSteps: 'nextSteps',
+  evaluation: 'evaluation'
+};
+
 exports.Prisma.SourceCodeEmbeddingScalarFieldEnum = {
   id: 'id',
   sourceCode: 'sourceCode',
@@ -250,6 +261,7 @@ exports.Prisma.ModelName = {
   Project: 'Project',
   UserToProject: 'UserToProject',
   Commit: 'Commit',
+  MeetingReport: 'MeetingReport',
   SourceCodeEmbedding: 'SourceCodeEmbedding'
 };
 

@@ -77,7 +77,7 @@ const MeetingCard = () => {
   return (
     <Card
       {...getRootProps()}
-      className="col-span-2 flex cursor-pointer flex-col items-center justify-center rounded-xl border border-blue-500/20 bg-linear-to-br from-blue-50 via-white to-blue-100 text-center transition-all duration-300 hover:border-blue-500/50 hover:shadow-md"
+      className="col-span-2 flex cursor-pointer flex-col items-center p-8 justify-center rounded-xl border border-blue-500/20 bg-linear-to-br from-blue-50 via-white to-blue-100 text-center transition-all duration-300 hover:border-blue-500/50 hover:shadow-md"
     >
       {!isUploading && (
         <>
@@ -104,7 +104,7 @@ const MeetingCard = () => {
               className="rounded-full! bg-blue-600 px-4! py-2! text-white shadow-sm transition-all duration-200 hover:scale-[1.02] hover:bg-blue-700"
             >
               <Upload className="mr-2 size-4" />
-              Upload Meeting
+              Upload Meeting Recording
               <input type="text" {...getInputProps()} className="hidden" />
             </Button>
           </div>

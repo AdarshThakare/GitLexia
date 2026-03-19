@@ -56,103 +56,118 @@ const MeetingsPage = () => {
   const refetch = useRefetch();
 
   return (
-    <div className="min-h-screen bg-[#fafaf8]">
-      <UploadingMeetingCard />
-      <div className="h-4" />
-
-      <div className="mb-6 border-b border-stone-200 pb-4">
-        <h1 className="text-2xl font-semibold tracking-tight text-stone-800">
-          Meetings
-        </h1>
-        <p className="mt-1 text-sm text-stone-400">
-          Review and manage your recorded sessions
-        </p>
+    <div className="flex flex-col gap-8 animate-in fade-in duration-700">
+      <div className="bg-white rounded-md border border-slate-200 p-2 shadow-sm">
+        <UploadingMeetingCard />
       </div>
 
-      <ul className="space-y-2">
-        {isLoading ? (
-          <>
-            <MeetingRowSkeleton />
-            <MeetingRowSkeleton />
-            <MeetingRowSkeleton />
-          </>
-        ) : !meetings || meetings.length === 0 ? (
-          <EmptyState />
-        ) : (
-          meetings.map((meeting) => (
-            <li
-              key={meeting.id}
-              className="group relative flex items-center justify-between gap-x-6 rounded-xl border border-stone-100 bg-white px-5 py-4 shadow-sm transition-all duration-200 hover:border-stone-200 hover:shadow-md"
-            >
-              {/* Left */}
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Link
-                    href={`/meetings/${meeting.id}`}
-                    className="text-md font-semibold text-stone-800 transition-colors hover:text-stone-600"
-                  >
-                    {meeting.name}
-                  </Link>
-                  {meeting.status === "PROCESSING" && (
-                    <Badge className="rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-600 ring-1 ring-amber-200">
-                      Processing…
-                    </Badge>
-                  )}
-                </div>
-                <div className="mt-1.5 flex items-center gap-3 text-xs text-stone-400">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    {meeting.createdAt.toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </span>
-                  <span className="h-1 w-1 rounded-full bg-stone-300" />
-                  <span className="flex items-center gap-1">
-                    <FileText className="h-3 w-3" />
-                    {meeting.issues.length}{" "}
-                    {meeting.issues.length === 1 ? "issue" : "issues"}
-                  </span>
-                </div>
-              </div>
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <h1 className="text-3xl font-black text-slate-900 tracking-tight" style={{ fontFamily: 'sup' }}>
+              Recording Archives
+            </h1>
+            <p className="mt-1 text-xs font-bold text-slate-400 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>
+              Neural Analysis of Collaborative Sessions
+            </p>
+          </div>
+          <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>
+            {meetings?.length || 0} Sessions Indexed
+          </div>
+        </div>
 
-              {/* Right */}
-              <div className="flex flex-none items-center gap-2">
-                <Link href={`/meetings/${meeting.id}`}>
+        <ul className="space-y-4">
+          {isLoading ? (
+            <div className="space-y-4">
+              <MeetingRowSkeleton />
+              <MeetingRowSkeleton />
+              <MeetingRowSkeleton />
+            </div>
+          ) : !meetings || meetings.length === 0 ? (
+            <EmptyState />
+          ) : (
+            meetings.map((meeting) => (
+              <li
+                key={meeting.id}
+                className="group relative flex items-center justify-between gap-x-6 rounded-md border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-indigo-300 hover:shadow-md"
+              >
+                {/* Left */}
+                <div className="min-w-0 flex-1 flex items-center gap-6">
+                  <div className="p-3 bg-slate-50 rounded-md group-hover:bg-indigo-50 transition-colors">
+                    <Mic className={`size-5 ${meeting.status === 'PROCESSING' ? 'text-amber-500 animate-pulse' : 'text-slate-400 group-hover:text-indigo-500'}`} />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-3">
+                      <Link
+                        href={`/meetings/${meeting.id}`}
+                        className="text-lg font-black text-slate-800 transition-colors hover:text-indigo-600 tracking-tight"
+                        style={{ fontFamily: 'sup' }}
+                      >
+                        {meeting.name}
+                      </Link>
+                      {meeting.status === "PROCESSING" && (
+                        <Badge className="rounded-md bg-amber-50 px-2 py-0.5 text-[10px] font-black text-amber-600 border-amber-200 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>
+                          Syncing…
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>
+                      <span className="flex items-center gap-1.5">
+                        <Calendar className="h-3 w-3" />
+                        {meeting.createdAt.toLocaleDateString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                      <span className="size-1 rounded-full bg-slate-200" />
+                      <span className="flex items-center gap-1.5">
+                        <FileText className="h-3 w-3" />
+                        {meeting.issues.length}{" "}
+                        {meeting.issues.length === 1 ? "Strategic Insight" : "Strategic Insights"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right */}
+                <div className="flex flex-none items-center gap-3">
+                  <Link href={`/meetings/${meeting.id}`}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-9 gap-2 rounded-md border-slate-200 px-4 text-xs font-black text-slate-600 transition-all hover:bg-slate-900 hover:text-white uppercase tracking-tight"
+                      style={{ fontFamily: 'sup' }}
+                    >
+                      Retrieve
+                      <ArrowRight className="h-3 w-3" />
+                    </Button>
+                  </Link>
                   <Button
                     size="sm"
-                    variant="outline"
-                    className="h-8 gap-1.5 rounded-lg border-stone-200 px-3 text-xs text-stone-600 transition-all hover:border-stone-300 hover:bg-stone-50 hover:text-stone-800"
-                  >
-                    View
-                    <ArrowRight className="h-3 w-3" />
-                  </Button>
-                </Link>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() =>
-                    deleteMeeting.mutate(
-                      { meetingId: meeting.id },
-                      {
-                        onSuccess: () => {
-                          toast.success("Meeting deleted successfully");
-                          refetch();
+                    variant="ghost"
+                    onClick={() =>
+                      deleteMeeting.mutate(
+                        { meetingId: meeting.id },
+                        {
+                          onSuccess: () => {
+                            toast.success("Session purged from memory");
+                            refetch();
+                          },
                         },
-                      },
-                    )
-                  }
-                  disabled={deleteMeeting.isPending}
-                  className="h-8 w-8 rounded-lg p-0 text-black transition-all hover:bg-red-50 hover:text-red-500"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
-              </div>
-            </li>
-          ))
-        )}
-      </ul>
+                      )
+                    }
+                    disabled={deleteMeeting.isPending}
+                    className="h-9 w-9 rounded-md p-0 text-slate-400 transition-all hover:bg-rose-50 hover:text-rose-500"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </li>
+            ))
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

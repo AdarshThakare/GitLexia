@@ -96,6 +96,7 @@ model Project {
   sourceCodeEmbeddings SourceCodeEmbedding[]
   savedQuestions       Question[]
   meetings             Meeting[]
+  meetingReports       MeetingReport[]
 }
 
 model UserToProject {
@@ -123,6 +124,21 @@ model Commit {
   commitAuthorAvatar String
   commitDate         DateTime
   summary            String
+}
+
+model MeetingReport {
+    id           String         @id @default(cuid())
+    createdAt    DateTime         @default(now())
+    updatedAt    DateTime         @updatedAt
+
+    name         String
+    projectId    String
+    project      Project          @relation(fields: [projectId] , references: [id], onDelete: Cascade)
+    
+    // Extracted intelligence
+    toDos        Json?            // Array of { person: string, tasks: string[] }
+    nextSteps    String[]
+    evaluation   String?          // Rigorous evaluation text
 }
 
 model SourceCodeEmbedding {

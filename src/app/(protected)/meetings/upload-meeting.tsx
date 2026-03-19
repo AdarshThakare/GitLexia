@@ -107,7 +107,7 @@ const MeetingCard = () => {
               className="w-fit rounded-full!"
             >
               <Upload className="mr-2 size-4" />
-              Upload Meeting
+              Upload Meeting Recording
               <input type="text" {...getInputProps()} className="hidden" />
             </Button>
           </div>
