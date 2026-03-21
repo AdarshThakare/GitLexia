@@ -10,13 +10,13 @@ const model = genAI.getGenerativeModel({
 });
 
 
-import axios from "axios";
+import { groq } from "@ai-sdk/groq";
+import { generateText } from "ai";
 
 export const aiSummarizedCommit = async (diff: string) => {
   try {
-    const response = await axios.post("http://localhost:11434/api/generate", {
-      model: process.env.OLLAMA_MODEL || "qwen2.5-coder",
-
+    const { text } = await generateText({
+      model: groq("qwen/qwen3-32b"),
       prompt: `You are an expert programmer, and you are trying to summarize a git diff.
       Reminders about the git diff format.
       For every file, there are a few metadata lines, like(for example):   
@@ -47,11 +47,10 @@ export const aiSummarizedCommit = async (diff: string) => {
       Do not include parts of the example in your summary.
       It is given only as an example of appropriate comments...
       Please summarise the following diff file: \n\n${diff}`,
-      stream: false,
     });
-    return response.data.response;
+    return text;
   } catch (error) {
-    console.error("Ollama error:", error);
+    console.error("Groq error:", error);
     return "";
   }
 };
@@ -62,9 +61,8 @@ export async function summarizeCode(doc: Document) {
   console.log("getting summary for ", doc.metadata.source);
   try {
     const code = doc.pageContent.slice(0, 10000);
-    const response = await axios.post("http://localhost:11434/api/generate", {
-      model: process.env.OLLAMA_MODEL || "qwen2.5-coder",
-
+    const { text } = await generateText({
+      model: groq("qwen/qwen3-32b"),
       prompt: `You are an intelligent software engineer who specializes in onboarding junior software engineers onto projects.
       You are onboarding a junior software engineer and explaining to them the purpose of the ${doc.metadata.source} file. Here is the code:
       ---
@@ -72,12 +70,11 @@ export async function summarizeCode(doc: Document) {
       ---
       
       Give a summary no more than 100-150 words of the code above`,
-      stream: false,
     });
 
-    return response.data.response || "";
+    return text || "";
   } catch (error) {
-    console.error("Ollama summarizeCode error:", error);
+    console.error("Groq summarizeCode error:", error);
     return "";
   }
 }
