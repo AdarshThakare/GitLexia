@@ -3,7 +3,7 @@ import React from "react";
 import { useLocalStorage } from "usehooks-ts";
 
 const useProject = () => {
-  const { data: projects } = api.project.getProjects.useQuery();
+  const { data: projects, isLoading } = api.project.getProjects.useQuery();
   const [projectId, setProjectId] = useLocalStorage("project-id", "", {
     initializeWithValue: true,
     deserializer: (value) => {
@@ -16,7 +16,7 @@ const useProject = () => {
   });
   const project = projects?.find((project) => project.id === projectId);
 
-  return { projects, project, projectId, setProjectId };
+  return { projects, project, projectId, setProjectId, isLoading };
 };
 
 export default useProject;

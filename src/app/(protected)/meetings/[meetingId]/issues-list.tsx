@@ -17,7 +17,8 @@ import {
 } from "@/components/ui/dialog";
 import { api, type RouterOutputs } from "@/trpc/react";
 import { VideoIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Progress } from "@/components/ui/progress";
 
 type Props = {
   meetingId: string;
@@ -27,9 +28,45 @@ const IssuesList = ({ meetingId }: Props) => {
   const { data: meeting, isLoading } = api.project.getMeetingById.useQuery(
     { meetingId },
     {
-      refetchInterval: 4000,
+      refetchInterval: (query) => {
+        return query.state.data?.status === "PROCESSING" ? 4000 : false;
+      },
     },
   );
+
+  const [status, setStatus] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (meeting?.status === "PROCESSING") {
+      interval = setInterval(() => {
+        setProgress((p) => {
+          if (p < 25) {
+            setStatus("Transcribing the content...");
+            return p + 1;
+          }
+          if (p < 50) {
+            setStatus("Analysing the contents...");
+            return p + 1;
+          }
+          if (p < 75) {
+            setStatus("Parsing the meets...");
+            return p + 1;
+          }
+          if (p < 99) {
+            setStatus("Loading the reports...");
+            return p + 1;
+          }
+          return p;
+        });
+      }, 1500);
+    } else {
+      setProgress(0);
+      setStatus("");
+    }
+    return () => clearInterval(interval);
+  }, [meeting?.status]);
 
   if (isLoading || !meeting) return <div className="">Loading...</div>;
   return (
@@ -52,14 +89,25 @@ const IssuesList = ({ meetingId }: Props) => {
         </div>
 
         <div className="h-4"></div>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-1">
-          <IssueCard issue={meeting.issues} />
-        </div>
+        {meeting.status === "PROCESSING" ? (
+          <div className="rounded-lg border border-blue-100 bg-blue-50/50 p-4 shadow-sm">
+            <div className="mb-2 flex items-center justify-between text-sm">
+              <span className="animate-pulse font-semibold text-blue-700">
+                {status || "Processing..."}
+              </span>
+              <span className="font-medium text-blue-600">{progress}%</span>
+            </div>
+            <Progress value={progress} className="h-2.5 bg-blue-100" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-1">
+            <IssueCard issue={meeting.issues} />
+          </div>
+        )}
       </div>
     </>
   );
 };
-
 function IssueCard({
   issue,
 }: {

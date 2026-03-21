@@ -41,9 +41,19 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
-    console.log(err);
+    console.error("Meeting processing error:", err);
+    try {
+      const body = await req.json();
+      const { meetingId } = bodyParser.parse(body);
+      await db.meeting.update({
+        where: { id: meetingId },
+        data: { status: "FAILED" },
+      });
+    } catch (updateErr) {
+      console.error("Failed to update status, probably body was already consumed or invalid:", updateErr);
+    }
     return NextResponse.json(
-      { error: "Internal Server Error " },
+      { error: "Internal Server Error" },
       { status: 500 },
     );
   }

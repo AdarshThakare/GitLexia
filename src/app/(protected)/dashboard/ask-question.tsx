@@ -32,8 +32,6 @@ const AskQuestionCard = () => {
     { fileName: string; sourceCode: string; summary: string }[]
   >([]);
   const [answer, setAnswer] = useState("");
-  const [status, setStatus] = useState("");
-  const [progress, setProgress] = useState(0);
   const saveAnswer = api.project.saveAnswer.useMutation();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,18 +40,12 @@ const AskQuestionCard = () => {
     setLoading(true);
     setAnswer("");
     setFileReferences([]);
-    setStatus("Assessing the files...");
-    setProgress(33);
 
     try {
       const { output, fileReferences } = await askQuestion(question, project.id);
-      setStatus("Exploring all the docs...");
-      setProgress(66);
       setFileReferences(fileReferences);
       setOpen(true);
 
-      setStatus("Generating answer...");
-      setProgress(100);
       for await (const delta of output) {
         if (delta) {
           setAnswer((ans) => ans + delta);
@@ -160,17 +152,6 @@ const AskQuestionCard = () => {
               className="-mt-4"
             />
             <div className="h-4"></div>
-            {loading && (
-              <div className="mb-4">
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground animate-pulse font-medium">
-                    {status}
-                  </span>
-                  <span className="text-muted-foreground">{progress}%</span>
-                </div>
-                <Progress value={progress} className="h-2" />
-              </div>
-            )}
             <Button type="submit" disabled={loading} className="rounded-full!">
               Ask it to GitLexia!
             </Button>

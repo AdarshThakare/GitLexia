@@ -70,7 +70,8 @@ export type SourceCodeEmbedding = $Result.DefaultSelection<Prisma.$SourceCodeEmb
 export namespace $Enums {
   export const MeetingStatus: {
   PROCESSING: 'PROCESSING',
-  COMPLETED: 'COMPLETED'
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
 };
 
 export type MeetingStatus = (typeof MeetingStatus)[keyof typeof MeetingStatus]

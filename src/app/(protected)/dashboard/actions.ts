@@ -1,9 +1,13 @@
 "use server";
 
 import { streamText } from "ai";
-import { ollama } from "ai-sdk-ollama";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { generateEmbedding } from "@/lib/gemini";
 import { db } from "@/server/db";
+
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 export async function askQuestion(question: string, projectId: string) {
   const queryVector = await generateEmbedding(question);
@@ -26,11 +30,7 @@ export async function askQuestion(question: string, projectId: string) {
   }
 
   const { textStream } = await streamText({
-    model: ollama(process.env.OLLAMA_MODEL || "qwen2.5-coder", {
-      options: {
-        num_ctx: 32000,
-      },
-    }),
+    model: google("gemini-2.5-flash"),
     prompt: `
         You are a AI code assistant who answers questions about the codebase. Your target audience is a technical intern who is a beginner. You are a brand new, powerful, human-like AI assistant.
         

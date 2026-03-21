@@ -249,7 +249,8 @@ exports.Prisma.JsonNullValueFilter = {
 };
 exports.MeetingStatus = exports.$Enums.MeetingStatus = {
   PROCESSING: 'PROCESSING',
-  COMPLETED: 'COMPLETED'
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
 };
 
 exports.Prisma.ModelName = {

@@ -32,7 +32,9 @@ export async function uploadFile(
 ) {
   return new Promise((resolve, reject) => {
     try {
-      const storageRef = ref(storage, file.name);
+      const fileName = `${Date.now()}-${file.name}`;
+      const storageRef = ref(storage, fileName);
+      console.log("Starting upload:", fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
       uploadTask.on(

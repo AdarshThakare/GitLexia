@@ -11,9 +11,11 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
+import useRefetch from "@/hooks/use-refetch";
 
 const MeetingCard = () => {
   const { project } = useProject();
+  const refetch = useRefetch();
   const processMeeting = useMutation({
     mutationFn: async (data: {
       meetingUrl: string;
@@ -43,6 +45,7 @@ const MeetingCard = () => {
     onDrop: async (acceptedFiles) => {
       if (!project) return;
       setIsUploading(true);
+      setProgress(0);
       const file = acceptedFiles[0];
       if (!file) return;
       const downloadUrl = (await uploadFile(
@@ -59,6 +62,7 @@ const MeetingCard = () => {
           onSuccess: (meeting) => {
             toast.success("Meeting Uploaded Successfully");
             router.push("/meetings");
+            refetch();
             processMeeting.mutateAsync({
               meetingId: meeting.id,
               meetingUrl: downloadUrl,

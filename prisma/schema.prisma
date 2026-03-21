@@ -16,6 +16,7 @@ datasource db {
 enum MeetingStatus {
     PROCESSING
     COMPLETED
+    FAILED
 }
 model Meeting {
     id           String         @id @default(cuid())

@@ -11,6 +11,8 @@ import { Calendar, FileText, Trash2, ArrowRight, Mic } from "lucide-react";
 import UploadingMeetingCard from "./upload-meeting";
 import { redirect } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Progress } from "@/components/ui/progress";
+import { useRouter } from "next/navigation";
 
 const MeetingRowSkeleton = () => (
   <li className="flex items-center justify-between gap-x-6 rounded-xl border border-stone-100 bg-white px-5 py-4 shadow-sm">
@@ -45,13 +47,56 @@ const EmptyState = () => (
 );
 
 const MeetingsPage = () => {
-  const { projectId, project } = useProject();
-  if (!project) redirect("/create");
+  const { projectId, project, isLoading: projectLoading } = useProject();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!projectLoading && !project) {
+      toast.error("Please select a project first");
+      router.push("/create");
+    }
+  }, [projectLoading, project, router]);
+
+  if (projectLoading || !project) return null;
+
+  const [status, setStatus] = React.useState("");
+  const [progress, setProgress] = React.useState(0);
 
   const { data: meetings, isLoading } = api.project.getMeetings.useQuery(
     { projectId },
-    { refetchInterval: 4000 },
+    {
+      refetchInterval: 4000,
+    },
   );
+
+  React.useEffect(() => {
+    let interval: NodeJS.Timeout;
+    const hasProcessing = meetings?.some((m) => m.status === "PROCESSING");
+    if (hasProcessing) {
+      interval = setInterval(() => {
+        setProgress((p) => {
+          if (p < 33) {
+            setStatus("Assessing the files...");
+            return p + 1;
+          }
+          if (p < 66) {
+            setStatus("Exploring all the docs...");
+            return p + 1;
+          }
+          if (p < 99) {
+            setStatus("Generating Recording Archives...");
+            return p + 1;
+          }
+          return p;
+        });
+      }, 1500);
+    } else {
+      setProgress(0);
+      setStatus("");
+    }
+    return () => clearInterval(interval);
+  }, [meetings]);
+
   const deleteMeeting = api.project.deleteMeetings.useMutation();
   const refetch = useRefetch();
 
@@ -60,6 +105,18 @@ const MeetingsPage = () => {
       <div className="bg-white rounded-md border border-slate-200 p-2 shadow-sm">
         <UploadingMeetingCard />
       </div>
+
+      {meetings?.some((m) => m.status === "PROCESSING") && (
+        <div className="rounded-lg border border-blue-100 bg-blue-50/50 p-4 shadow-sm">
+          <div className="mb-2 flex items-center justify-between text-sm">
+            <span className="animate-pulse font-semibold text-blue-700">
+              {status}
+            </span>
+            <span className="font-medium text-blue-600">{progress}%</span>
+          </div>
+          <Progress value={progress} className="h-2.5 bg-blue-100" />
+        </div>
+      )}
 
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between border-b border-slate-100 pb-4">

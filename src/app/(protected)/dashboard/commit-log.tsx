@@ -4,14 +4,18 @@ import { cn } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
+import { Progress } from "@/components/ui/progress";
 
 const CommitLog = () => {
   const { projectId, project } = useProject();
   const utils = api.useUtils();
+  const [status, setStatus] = useState("");
+  const [progress, setProgress] = useState(0);
+
   const { data: commits, isLoading } = api.project.getCommits.useQuery(
     { projectId },
     {
@@ -36,6 +40,34 @@ const CommitLog = () => {
       utils.project.getCommits.invalidate({ projectId });
     },
   });
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (generateInsights.isPending || retryMutation.isPending) {
+      setProgress(0);
+      interval = setInterval(() => {
+        setProgress((p) => {
+          if (p < 33) {
+            setStatus("Assessing the files...");
+            return p + 1;
+          }
+          if (p < 66) {
+            setStatus("Exploring all the docs...");
+            return p + 1;
+          }
+          if (p < 99) {
+            setStatus("Generating commit stream...");
+            return p + 1;
+          }
+          return p;
+        });
+      }, 1500);
+    } else {
+      setProgress(0);
+      setStatus("");
+    }
+    return () => clearInterval(interval);
+  }, [generateInsights.isPending, retryMutation.isPending]);
 
   if (isLoading) {
     return (
@@ -70,6 +102,18 @@ const CommitLog = () => {
 
   return (
     <>
+      {(generateInsights.isPending || retryMutation.isPending) && (
+        <div className="mb-6 rounded-lg border border-blue-100 bg-blue-50/50 p-4 shadow-sm">
+          <div className="mb-2 flex items-center justify-between text-sm">
+            <span className="animate-pulse font-semibold text-blue-700">
+              {status}
+            </span>
+            <span className="font-medium text-blue-600">{progress}%</span>
+          </div>
+          <Progress value={progress} className="h-2.5 bg-blue-100" />
+        </div>
+      )}
+
       {commits?.length === 0 ? (
         <div className="flex flex-col items-center justify-center p-8 bg-white border border-dashed rounded-lg shadow-sm">
           <p className="text-gray-500 mb-4 text-center">

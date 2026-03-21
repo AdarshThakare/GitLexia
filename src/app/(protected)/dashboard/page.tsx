@@ -10,11 +10,21 @@ import MeetingCard from "./meeting-card";
 import ArchiveButton from "./archive-button";
 import InviteButton from "./invite-button";
 import TeamMembers from "./team-members";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const DashboardPage = () => {
-  const { project } = useProject();
-  if (!project) redirect("/create");
+  const { project, isLoading } = useProject();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!isLoading && !project) {
+      toast.error("Please select a project first");
+      router.push("/create");
+    }
+  }, [isLoading, project, router]);
+
+  if (isLoading || !project) return null;
 
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-700">

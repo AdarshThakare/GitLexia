@@ -12,9 +12,10 @@ import {
 } from "@/components/ui/sheet";
 import MDEditor from "@uiw/react-md-editor";
 import CodeReferences from "../dashboard/code-references";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MessageSquareDashed } from "lucide-react";
+import { toast } from "sonner";
 
 const SavedQuestionSkeleton = () => (
   <div className="flex items-center gap-4 rounded-lg border bg-white p-4 shadow">
@@ -46,8 +47,17 @@ const EmptyState = () => (
 );
 
 const page = () => {
-  const { projectId, project } = useProject();
-  if (!project) redirect("/create");
+  const { projectId, project, isLoading: projectLoading } = useProject();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!projectLoading && !project) {
+      toast.error("Please select a project first");
+      router.push("/create");
+    }
+  }, [projectLoading, project, router]);
+
+  if (projectLoading || !project) return null;
 
   const { data: questions, isLoading } = api.project.getQuestion.useQuery({
     projectId,
