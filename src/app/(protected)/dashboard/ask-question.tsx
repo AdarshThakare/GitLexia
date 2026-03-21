@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import useProject from "@/hooks/use-project";
@@ -13,13 +14,14 @@ import React, { useState } from "react";
 import { askQuestion } from "./actions";
 import MDEditor from "@uiw/react-md-editor";
 
-import { readStreamableValue } from "ai/rsc";
+
 import CodeReferences from "./code-references";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import { api } from "@/trpc/react";
 import { toast } from "sonner";
 import useRefetch from "@/hooks/use-refetch";
+import { Progress } from "@/components/ui/progress";
 
 const AskQuestionCard = () => {
   const { project } = useProject();
@@ -30,26 +32,40 @@ const AskQuestionCard = () => {
     { fileName: string; sourceCode: string; summary: string }[]
   >([]);
   const [answer, setAnswer] = useState("");
+  const [status, setStatus] = useState("");
+  const [progress, setProgress] = useState(0);
   const saveAnswer = api.project.saveAnswer.useMutation();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setAnswer("");
-    setFileReferences([]);
     e.preventDefault();
     if (!project?.id) return;
     setLoading(true);
-    const { output, fileReferences } = await askQuestion(question, project.id);
-    setOpen(true);
-    setFileReferences(fileReferences);
+    setAnswer("");
+    setFileReferences([]);
+    setStatus("Assessing the files...");
+    setProgress(33);
 
-    for await (const delta of readStreamableValue(output)) {
-      if (delta) {
-        setAnswer((ans) => ans + delta);
+    try {
+      const { output, fileReferences } = await askQuestion(question, project.id);
+      setStatus("Exploring all the docs...");
+      setProgress(66);
+      setFileReferences(fileReferences);
+      setOpen(true);
+
+      setStatus("Generating answer...");
+      setProgress(100);
+      for await (const delta of output) {
+        if (delta) {
+          setAnswer((ans) => ans + delta);
+        }
       }
+    } catch (e) {
+      toast.error("Failed to ask question");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
+
 
   const refetch = useRefetch();
   return (
@@ -96,7 +112,11 @@ const AskQuestionCard = () => {
                 </Button>
               </div>
             </DialogTitle>
+            <DialogDescription className="sr-only">
+              Answer for your codebase question
+            </DialogDescription>
           </DialogHeader>
+
           <div className="-mt-4 flex flex-col items-center">
             <div
               data-color-mode="light"
@@ -140,6 +160,17 @@ const AskQuestionCard = () => {
               className="-mt-4"
             />
             <div className="h-4"></div>
+            {loading && (
+              <div className="mb-4">
+                <div className="mb-2 flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground animate-pulse font-medium">
+                    {status}
+                  </span>
+                  <span className="text-muted-foreground">{progress}%</span>
+                </div>
+                <Progress value={progress} className="h-2" />
+              </div>
+            )}
             <Button type="submit" disabled={loading} className="rounded-full!">
               Ask it to GitLexia!
             </Button>

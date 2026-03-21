@@ -3,6 +3,7 @@ import { Octokit } from "octokit";
 import axios from "axios";
 import { aiSummarizedCommit } from "./gemini";
 import dotenv from "dotenv";
+import pLimit from "p-limit";
 dotenv.config();
 
 export const octokit = new Octokit({
@@ -53,42 +54,54 @@ export const pollCommits = async (projectId: string) => {
     projectId,
     commitHashes,
   );
-  const summaryResponses = await Promise.allSettled(
-    unprocessedCommits.map((commit) => {
-      return summarizeCommit(githubUrl, commit.commitHash);
+
+  if (unprocessedCommits.length > 0) {
+    await db.commit.createMany({
+      data: unprocessedCommits.map((commit) => ({
+        projectId: projectId,
+        commitHash: commit.commitHash,
+        commitMessage: commit.commitMessage,
+        commitAuthorName: commit.commitAuthorName,
+        commitAuthorAvatar: commit.commitAuthorAvatar,
+        commitDate: commit.commitDate,
+        summary: "", // Start with no summary
+      })),
+    });
+  }
+
+  const limit = pLimit(5); // Process at most 5 summaries at once
+  const summaryPromises = unprocessedCommits.map((commit) =>
+    limit(async () => {
+      try {
+        const summary = await summarizeCommit(githubUrl, commit.commitHash);
+        if (summary) {
+          await db.commit.update({
+            where: {
+              projectId_commitHash: {
+                projectId: projectId,
+                commitHash: commit.commitHash,
+              },
+            },
+            data: { summary },
+          });
+        }
+      } catch (error) {
+        console.error(`Error summarizing commit ${commit.commitHash}:`, error);
+      }
     }),
   );
 
-  const sumamries = summaryResponses.map((response) => {
-    if (response.status === "fulfilled") {
-      return response.value as string;
-    }
-    return "";
-  });
+  await Promise.allSettled(summaryPromises);
 
-  const commit = await db.commit.createMany({
-    data: sumamries.map((summary, index) => {
-      console.log("Processing commit : ", index);
-      console.log({ summary });
-      return {
-        projectId: projectId,
-        commitHash: unprocessedCommits[index]!.commitHash,
-        commitMessage: unprocessedCommits[index]!.commitMessage,
-        commitAuthorName: unprocessedCommits[index]!.commitAuthorName,
-        commitAuthorAvatar: unprocessedCommits[index]!.commitAuthorAvatar,
-        commitDate: unprocessedCommits[index]!.commitDate,
-        summary: summary,
-      };
-    }),
-  });
-
-  return commit;
+  return { success: true };
 };
+
 
 export async function summarizeCommit(githubUrl: string, commitHash: string) {
   const { data } = await axios.get(`${githubUrl}/commit/${commitHash}.diff`, {
     headers: {
       Accept: "application/vnd.github.v3.diff",
+      Authorization: `token ${process.env.GITHUB_TOKEN}`,
     },
   });
 

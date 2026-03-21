@@ -1,6 +1,5 @@
 import { octokit } from "./github";
 
-// Helper to handle Github's 202 Accepted which means statistics are still building.
 async function fetchWithRetry(fetcher: () => Promise<any>, retries = 3): Promise<any> {
   for (let i = 0; i < retries; i++) {
     try {
@@ -9,7 +8,6 @@ async function fetchWithRetry(fetcher: () => Promise<any>, retries = 3): Promise
         return response.data;
       }
       if (response.status === 202) {
-        // Wait 2 seconds before retrying as recommended by Github
         await new Promise((resolve) => setTimeout(resolve, 2000));
         continue;
       }

@@ -93,8 +93,11 @@ export const projectRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.db.commit.findMany({
         where: { projectId: input.projectId },
+        orderBy: { commitDate: "desc" },
+        take: 15,
       });
     }),
+
 
   getProjectAnalytics: protectedProcedure
     .input(z.object({ projectId: z.string() }))

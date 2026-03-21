@@ -13782,6 +13782,7 @@ export namespace Prisma {
 
   export type CommitWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    projectId_commitHash?: CommitProjectIdCommitHashCompoundUniqueInput
     AND?: CommitWhereInput | CommitWhereInput[]
     OR?: CommitWhereInput[]
     NOT?: CommitWhereInput | CommitWhereInput[]
@@ -13795,7 +13796,7 @@ export namespace Prisma {
     commitDate?: DateTimeFilter<"Commit"> | Date | string
     summary?: StringFilter<"Commit"> | string
     project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
-  }, "id">
+  }, "id" | "projectId_commitHash">
 
   export type CommitOrderByWithAggregationInput = {
     id?: SortOrder
@@ -15217,6 +15218,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
     userId?: SortOrder
     projectId?: SortOrder
+  }
+
+  export type CommitProjectIdCommitHashCompoundUniqueInput = {
+    projectId: string
+    commitHash: string
   }
 
   export type CommitCountOrderByAggregateInput = {

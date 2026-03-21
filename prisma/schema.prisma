@@ -124,7 +124,10 @@ model Commit {
   commitAuthorAvatar String
   commitDate         DateTime
   summary            String
+
+  @@unique([projectId, commitHash])
 }
+
 
 model MeetingReport {
     id           String         @id @default(cuid())

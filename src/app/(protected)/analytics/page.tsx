@@ -16,7 +16,28 @@ import { Skeleton } from "@/components/ui/skeleton";
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function AnalyticsPage() {
+function AnalyticsSkeleton() {
+  return (
+    <div className="p-8 space-y-8 animate-pulse bg-slate-50/50 min-h-screen">
+      <div className="flex items-center space-x-4">
+        <Skeleton className="h-16 w-16 rounded-[2rem]" />
+        <div className="space-y-3">
+          <Skeleton className="h-6 w-[350px]" />
+          <Skeleton className="h-4 w-[280px]" />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-40 rounded-[2.5rem]" />)}
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Skeleton className="h-[600px] lg:col-span-2 rounded-[3rem]" />
+        <Skeleton className="h-[600px] rounded-[3rem]" />
+      </div>
+    </div>
+  );
+}
+
+function AnalyticsContent() {
   const { projectId } = useProject();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -53,24 +74,7 @@ export default function AnalyticsPage() {
   }, []);
 
   if (!hasMounted || isLoading) {
-    return (
-      <div className="p-8 space-y-8 animate-pulse bg-slate-50/50 min-h-screen">
-        <div className="flex items-center space-x-4">
-          <Skeleton className="h-16 w-16 rounded-[2rem]" />
-          <div className="space-y-3">
-            <Skeleton className="h-6 w-[350px]" />
-            <Skeleton className="h-4 w-[280px]" />
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-40 rounded-[2.5rem]" />)}
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Skeleton className="h-[600px] lg:col-span-2 rounded-[3rem]" />
-          <Skeleton className="h-[600px] rounded-[3rem]" />
-        </div>
-      </div>
-    );
+    return <AnalyticsSkeleton />;
   }
 
   if (!projectId) {
@@ -247,17 +251,6 @@ export default function AnalyticsPage() {
                 commits={data?.dbCommits || []}
               />
             </div>
-            {/* 
-            <div className="flex flex-col gap-8 mt-12 bg-slate-50/50 p-10 rounded-md border border-slate-100 shadow-inner">
-               <div className="flex items-center justify-between border-b border-slate-200 pb-6">
-                  <div>
-                    <h2 className="text-3xl font-black text-slate-900 tracking-tight" style={{ fontFamily: 'sup' }}>Meeting Intelligence Depot</h2>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1" style={{ fontFamily: 'sup' }}>Authentic To-Dos and Strategic Rigor from internal reports</p>
-                  </div>
-                  <FileText className="size-8 text-indigo-500" />
-               </div>
-               <MeetingIntelligence projectId={projectId || ""} />
-            </div> */}
           </div>
         )}
 
@@ -279,5 +272,13 @@ export default function AnalyticsPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function AnalyticsPage() {
+  return (
+    <React.Suspense fallback={<AnalyticsSkeleton />}>
+      <AnalyticsContent />
+    </React.Suspense>
   );
 }
