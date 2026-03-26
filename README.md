@@ -2,8 +2,8 @@
 
 📖 **RAG-powered Git summarization & collaboration intelligence**
 
-![GitHub Repo stars](https://img.shields.io/github/stars/ishanrt119/bluebit-team-nexus?style=social)
-![GitHub forks](https://img.shields.io/github/forks/ishanrt119/bluebit-team-nexus?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/adarshthakare/gitlexia?style=social)
+![GitHub forks](https://img.shields.io/github/forks/adarshthakare/gitlexia?style=social)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 ---
@@ -171,7 +171,7 @@ Key architectural decisions:
 ## 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/ishanrt119/bluebit-team-nexus.git
+git clone https://github.com/adarshthakare/gitlexia.git
 cd bluebit-team-nexus
 ```
 
