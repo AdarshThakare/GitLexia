@@ -157,12 +157,12 @@ GitHub Repository URL
 
 Key architectural decisions:
 
-1️⃣ **T3 Stack** — Next.js + tRPC + Prisma + Tailwind, all in one TypeScript monorepo
-2️⃣ **Gemini AI** — handles embeddings for RAG and commit/code summarization
-3️⃣ **AssemblyAI** — meeting audio transcription pipeline
-4️⃣ **Firebase** — file storage for meeting uploads
-5️⃣ **Clerk** — authentication and user management
-6️⃣ **Razorpay** — billing and credit management
+- 1️⃣ **T3 Stack** — Next.js + tRPC + Prisma + Tailwind, all in one TypeScript monorepo
+- 2️⃣ **Gemini AI** — handles embeddings for RAG and commit/code summarization
+- 3️⃣ **AssemblyAI** — meeting audio transcription pipeline
+- 4️⃣ **Firebase** — file storage for meeting uploads
+- 5️⃣ **Clerk** — authentication and user management
+- 6️⃣ **Razorpay** — billing and credit management
 
 ---
 
@@ -368,14 +368,14 @@ screenshots/billing.png
 
 # 🚀 Future Improvements
 
-✨ Pull request and issue summarization
-✨ Slack / Notion integration for sharing summaries
-✨ File-level contribution and ownership visualization
-✨ Repository health score and risk indicators
-✨ Real-time GitHub webhook indexing
-✨ Multi-repository cross-project Q&A
-✨ GitLab and Bitbucket support
-✨ Team collaboration graph and knowledge silo detection
+- ✨ Pull request and issue summarization
+- ✨ Slack / Notion integration for sharing summaries
+- ✨ File-level contribution and ownership visualization
+- ✨ Repository health score and risk indicators
+- ✨ Real-time GitHub webhook indexing
+- ✨ Multi-repository cross-project Q&A
+- ✨ GitLab and Bitbucket support
+- ✨ Team collaboration graph and knowledge silo detection
 
 ---
 
