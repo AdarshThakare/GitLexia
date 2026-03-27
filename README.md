@@ -156,7 +156,7 @@ GitHub Repository URL
 ```
 
 ```
-screenshots/architecture.png
+![System Architecture](screenshots/architecture.png)
 ```
 
 Key architectural decisions:
@@ -221,6 +221,8 @@ NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
 # Razorpay
 RAZORPAY_KEY_ID=your_razorpay_key_id
 RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+NEXT_PUBLIC_RAZORPAY_ID=razorpay_id
+RAZORPAY_WEBHOOK_SECRET=your_webhook_secret
 ```
 
 ---
@@ -363,13 +365,13 @@ All repository data is embedded via Gemini and stored in PostgreSQL for semantic
 # 🖼 Screenshots
 
 ```
-screenshots/landing.png
-screenshots/create.png
-screenshots/dashboard.png
-screenshots/qna.png
-screenshots/chat.png
-screenshots/analytics.png
-screenshots/meeting.png
+![Landing Page](screenshots/landing.png)
+![Create Page](screenshots/create.png)
+![dashboard Page](screenshots/dashboard.png)
+![QNA Page](screenshots/qna.png)
+![Chats Page](screenshots/chat.png)
+![Analytics Page](screenshots/analytics.png)
+![Meetings Page](screenshots/meeting.png)
 ```
 
 ---
