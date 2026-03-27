@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { TRPCReactProvider } from "@/trpc/react";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
+import Script from "next/script";
 
 const sup = localFont({ src: "../fonts/sup/sup.woff2" });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <body suppressHydrationWarning>
           <TRPCReactProvider>{children}</TRPCReactProvider>
           <Toaster richColors />
+          <Script src="https://checkout.razorpay.com/v1/checkout.js" />
         </body>
       </html>
     </ClerkProvider>

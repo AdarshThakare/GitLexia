@@ -298,6 +298,7 @@ export const projectRouter = createTRPCRouter({
       select: {
         emailAddress: true,
         firstName: true,
+        credits: true,
       },
     });
   }),
@@ -320,8 +321,8 @@ export const projectRouter = createTRPCRouter({
         amount: z.number().int().positive(), // INR, e.g. 499
       }),
     )
-    .mutation(async ({ input }) => {
-      const order = await createRazorpayOrder(input.amount, input.credits);
+    .mutation(async ({ ctx, input }) => {
+      const order = await createRazorpayOrder(input.amount, input.credits, ctx.user.userId!);
       return order; // { razorpayOrderId, amount, currency }
     }),
 

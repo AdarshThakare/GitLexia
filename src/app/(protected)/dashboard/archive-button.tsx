@@ -17,7 +17,7 @@ const ArchiveButton = () => {
       disabled={archiveProject.isPending}
       size="lg"
       variant="destructive"
-      className="rounded-full"
+      className="rounded-full flex justify-center items-center gap-3"
       onClick={() => {
         archiveProject.mutate(
           { projectId },
@@ -34,7 +34,8 @@ const ArchiveButton = () => {
       }}
     >
       {" "}
-      <Trash2 className="h-3.5 w-3.5" /> Remove Project
+      <Trash2 className="h-4 w-4 text-white" />
+      <span className="text-white" style={{ fontFamily: 'sup' }}>Remove Project</span>
     </Button>
   );
 };

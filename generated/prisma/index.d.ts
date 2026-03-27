@@ -4188,8 +4188,18 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    credits: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    credits: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -4198,6 +4208,7 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     imageUrl: string | null
+    credits: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -4206,6 +4217,7 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     imageUrl: string | null
+    credits: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -4214,9 +4226,18 @@ export namespace Prisma {
     firstName: number
     lastName: number
     imageUrl: number
+    credits: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    credits?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    credits?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -4224,6 +4245,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     imageUrl?: true
+    credits?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -4232,6 +4254,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     imageUrl?: true
+    credits?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -4240,6 +4263,7 @@ export namespace Prisma {
     firstName?: true
     lastName?: true
     imageUrl?: true
+    credits?: true
     _all?: true
   }
 
@@ -4281,6 +4305,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -4311,6 +4347,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -4321,7 +4359,10 @@ export namespace Prisma {
     firstName: string | null
     lastName: string | null
     imageUrl: string | null
+    credits: number
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -4346,6 +4387,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     imageUrl?: boolean
+    credits?: boolean
     questionsAsked?: boolean | User$questionsAskedArgs<ExtArgs>
     userToProjects?: boolean | User$userToProjectsArgs<ExtArgs>
     RazorpayTransactions?: boolean | User$RazorpayTransactionsArgs<ExtArgs>
@@ -4359,6 +4401,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     imageUrl?: boolean
+    credits?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4367,6 +4410,7 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     imageUrl?: boolean
+    credits?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -4375,9 +4419,10 @@ export namespace Prisma {
     firstName?: boolean
     lastName?: boolean
     imageUrl?: boolean
+    credits?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "emailAddress" | "firstName" | "lastName" | "imageUrl", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "emailAddress" | "firstName" | "lastName" | "imageUrl" | "credits", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     questionsAsked?: boolean | User$questionsAskedArgs<ExtArgs>
     userToProjects?: boolean | User$userToProjectsArgs<ExtArgs>
@@ -4402,6 +4447,7 @@ export namespace Prisma {
       firstName: string | null
       lastName: string | null
       imageUrl: string | null
+      credits: number
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -4834,6 +4880,7 @@ export namespace Prisma {
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly imageUrl: FieldRef<"User", 'String'>
+    readonly credits: FieldRef<"User", 'Int'>
   }
     
 
@@ -14303,7 +14350,8 @@ export namespace Prisma {
     emailAddress: 'emailAddress',
     firstName: 'firstName',
     lastName: 'lastName',
-    imageUrl: 'imageUrl'
+    imageUrl: 'imageUrl',
+    credits: 'credits'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -14714,6 +14762,7 @@ export namespace Prisma {
     firstName?: StringNullableFilter<"User"> | string | null
     lastName?: StringNullableFilter<"User"> | string | null
     imageUrl?: StringNullableFilter<"User"> | string | null
+    credits?: IntFilter<"User"> | number
     questionsAsked?: QuestionListRelationFilter
     userToProjects?: UserToProjectListRelationFilter
     RazorpayTransactions?: TransactionListRelationFilter
@@ -14726,6 +14775,7 @@ export namespace Prisma {
     firstName?: SortOrderInput | SortOrder
     lastName?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    credits?: SortOrder
     questionsAsked?: QuestionOrderByRelationAggregateInput
     userToProjects?: UserToProjectOrderByRelationAggregateInput
     RazorpayTransactions?: TransactionOrderByRelationAggregateInput
@@ -14741,6 +14791,7 @@ export namespace Prisma {
     firstName?: StringNullableFilter<"User"> | string | null
     lastName?: StringNullableFilter<"User"> | string | null
     imageUrl?: StringNullableFilter<"User"> | string | null
+    credits?: IntFilter<"User"> | number
     questionsAsked?: QuestionListRelationFilter
     userToProjects?: UserToProjectListRelationFilter
     RazorpayTransactions?: TransactionListRelationFilter
@@ -14753,9 +14804,12 @@ export namespace Prisma {
     firstName?: SortOrderInput | SortOrder
     lastName?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    credits?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -14767,6 +14821,7 @@ export namespace Prisma {
     firstName?: StringNullableWithAggregatesFilter<"User"> | string | null
     lastName?: StringNullableWithAggregatesFilter<"User"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    credits?: IntWithAggregatesFilter<"User"> | number
   }
 
   export type TransactionWhereInput = {
@@ -15491,6 +15546,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     questionsAsked?: QuestionCreateNestedManyWithoutUserInput
     userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
     RazorpayTransactions?: TransactionCreateNestedManyWithoutUserInput
@@ -15503,6 +15559,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     questionsAsked?: QuestionUncheckedCreateNestedManyWithoutUserInput
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
     RazorpayTransactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -15515,6 +15572,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QuestionUpdateManyWithoutUserNestedInput
     userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
     RazorpayTransactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -15527,6 +15585,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
     RazorpayTransactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -15539,6 +15598,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
   }
 
   export type UserUpdateManyMutationInput = {
@@ -15547,6 +15607,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -15555,6 +15616,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
   }
 
   export type TransactionCreateInput = {
@@ -16331,6 +16393,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type QuestionListRelationFilter = {
     every?: QuestionWhereInput
     some?: QuestionWhereInput
@@ -16382,6 +16455,11 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     imageUrl?: SortOrder
+    credits?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    credits?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -16390,6 +16468,7 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     imageUrl?: SortOrder
+    credits?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -16398,6 +16477,11 @@ export namespace Prisma {
     firstName?: SortOrder
     lastName?: SortOrder
     imageUrl?: SortOrder
+    credits?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    credits?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -16418,7 +16502,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
     notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -16426,7 +16510,12 @@ export namespace Prisma {
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -16473,22 +16562,6 @@ export namespace Prisma {
 
   export type TransactionSumOrderByAggregateInput = {
     credits?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -17028,6 +17101,14 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type QuestionUpdateManyWithoutUserNestedInput = {
     create?: XOR<QuestionCreateWithoutUserInput, QuestionUncheckedCreateWithoutUserInput> | QuestionCreateWithoutUserInput[] | QuestionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: QuestionCreateOrConnectWithoutUserInput | QuestionCreateOrConnectWithoutUserInput[]
@@ -17144,14 +17225,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutRazorpayTransactionsInput, UserUncheckedCreateWithoutRazorpayTransactionsInput>
     connectOrCreate?: UserCreateOrConnectWithoutRazorpayTransactionsInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutRazorpayTransactionsNestedInput = {
@@ -18269,6 +18342,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     questionsAsked?: QuestionCreateNestedManyWithoutUserInput
     userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
     chats?: ChatCreateNestedManyWithoutUserInput
@@ -18280,6 +18354,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     questionsAsked?: QuestionUncheckedCreateNestedManyWithoutUserInput
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
     chats?: ChatUncheckedCreateNestedManyWithoutUserInput
@@ -18307,6 +18382,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QuestionUpdateManyWithoutUserNestedInput
     userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
     chats?: ChatUpdateManyWithoutUserNestedInput
@@ -18318,6 +18394,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
     chats?: ChatUncheckedUpdateManyWithoutUserNestedInput
@@ -18366,6 +18443,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
     RazorpayTransactions?: TransactionCreateNestedManyWithoutUserInput
     chats?: ChatCreateNestedManyWithoutUserInput
@@ -18377,6 +18455,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
     RazorpayTransactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     chats?: ChatUncheckedCreateNestedManyWithoutUserInput
@@ -18447,6 +18526,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
     RazorpayTransactions?: TransactionUpdateManyWithoutUserNestedInput
     chats?: ChatUpdateManyWithoutUserNestedInput
@@ -18458,6 +18538,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
     RazorpayTransactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     chats?: ChatUncheckedUpdateManyWithoutUserNestedInput
@@ -18835,6 +18916,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     questionsAsked?: QuestionCreateNestedManyWithoutUserInput
     RazorpayTransactions?: TransactionCreateNestedManyWithoutUserInput
     chats?: ChatCreateNestedManyWithoutUserInput
@@ -18846,6 +18928,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     questionsAsked?: QuestionUncheckedCreateNestedManyWithoutUserInput
     RazorpayTransactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
     chats?: ChatUncheckedCreateNestedManyWithoutUserInput
@@ -18910,6 +18993,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QuestionUpdateManyWithoutUserNestedInput
     RazorpayTransactions?: TransactionUpdateManyWithoutUserNestedInput
     chats?: ChatUpdateManyWithoutUserNestedInput
@@ -18921,6 +19005,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     RazorpayTransactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
     chats?: ChatUncheckedUpdateManyWithoutUserNestedInput
@@ -19252,6 +19337,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     questionsAsked?: QuestionCreateNestedManyWithoutUserInput
     userToProjects?: UserToProjectCreateNestedManyWithoutUserInput
     RazorpayTransactions?: TransactionCreateNestedManyWithoutUserInput
@@ -19263,6 +19349,7 @@ export namespace Prisma {
     firstName?: string | null
     lastName?: string | null
     imageUrl?: string | null
+    credits?: number
     questionsAsked?: QuestionUncheckedCreateNestedManyWithoutUserInput
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutUserInput
     RazorpayTransactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -19333,6 +19420,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QuestionUpdateManyWithoutUserNestedInput
     userToProjects?: UserToProjectUpdateManyWithoutUserNestedInput
     RazorpayTransactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -19344,6 +19432,7 @@ export namespace Prisma {
     firstName?: NullableStringFieldUpdateOperationsInput | string | null
     lastName?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    credits?: IntFieldUpdateOperationsInput | number
     questionsAsked?: QuestionUncheckedUpdateManyWithoutUserNestedInput
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutUserNestedInput
     RazorpayTransactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput

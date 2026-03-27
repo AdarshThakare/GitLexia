@@ -148,7 +148,8 @@ exports.Prisma.UserScalarFieldEnum = {
   emailAddress: 'emailAddress',
   firstName: 'firstName',
   lastName: 'lastName',
-  imageUrl: 'imageUrl'
+  imageUrl: 'imageUrl',
+  credits: 'credits'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {

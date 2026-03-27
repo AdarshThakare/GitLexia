@@ -43,10 +43,10 @@ const InviteButton = () => {
         size="lg"
         variant="outline"
         onClick={() => setOpen(true)}
-        className="rounded-full"
+        className="rounded-full flex justify-center items-center gap-2"
       >
-        <Plus />
-        Invite Members
+        <Plus className="h-4 w-4" />
+        <span style={{ fontFamily: 'sup' }}>Invite Members</span>
       </Button>
     </>
   );

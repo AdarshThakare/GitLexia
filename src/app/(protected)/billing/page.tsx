@@ -7,9 +7,10 @@ import { redirect } from "next/navigation";
 import useProject from "@/hooks/use-project";
 import { Zap, GitCommit, Mic, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
+import { PricingModule } from "@/components/ui/pricing-module";
 
 const CREDIT_PACKS = [
-  { credits: 50, price: 10, label: "₹10.00" },
+  { credits: 50, price: 1, label: "₹10.00" },
   { credits: 150, price: 15, label: "₹15.00" },
   { credits: 500, price: 50, label: "₹50.00" },
 ];
@@ -18,7 +19,8 @@ const BillingPage = () => {
   const { project } = useProject();
   if (!project) redirect("/create");
 
-  const { refetch: refetchCredits } = api.project.getMyCredits.useQuery();
+  const { data: userCredits, refetch: refetchCredits } = api.project.getMyCredits.useQuery();
+  const { refetch: refetchTransactions } = api.project.getTransactions.useQuery();
   const createOrder = api.project.createOrder.useMutation();
   const verifyPayment = api.project.verifyPayment.useMutation();
   const [loading, setLoading] = useState<number | null>(null);
@@ -48,15 +50,21 @@ const BillingPage = () => {
           razorpay_order_id: string;
           razorpay_signature: string;
         }) => {
-          // Step 3 — verify signature + credit user
-          await verifyPayment.mutateAsync({
-            credits: pack.credits,
-            razorpayOrderId: response.razorpay_order_id,
-            razorpayPaymentId: response.razorpay_payment_id,
-            razorpaySignature: response.razorpay_signature,
-          });
-          toast.success(`${pack.credits} credits added to your account!`);
-          void refetchCredits();
+          try {
+            // Step 3 — verify signature + credit user
+            await verifyPayment.mutateAsync({
+              credits: pack.credits,
+              razorpayOrderId: response.razorpay_order_id,
+              razorpayPaymentId: response.razorpay_payment_id,
+              razorpaySignature: response.razorpay_signature,
+            });
+            toast.success(`${pack.credits} credits added to your account!`);
+            void refetchCredits();
+            void refetchTransactions();
+          } catch (error) {
+            console.error("Payment verification failed:", error);
+            toast.error("Failed to verify payment. Please contact support.");
+          }
         },
         theme: { color: "#0c0a09" },
       };
@@ -71,7 +79,7 @@ const BillingPage = () => {
     }
   };
 
-  const credits = 0;
+  const credits = userCredits?.credits ?? 0;
 
   return (
     <div className="min-h-screen bg-[#fafaf8]">
@@ -136,45 +144,84 @@ const BillingPage = () => {
         </CardContent>
       </Card>
 
-      {/* Credit packs */}
-      <h2 className="mb-3 text-base font-semibold text-stone-700">
-        Buy Credits
-      </h2>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        {CREDIT_PACKS.map((pack, i) => (
-          <div
-            key={pack.credits}
-            className="group flex flex-col gap-4 rounded-xl border border-stone-100 bg-white px-5 py-5 shadow-sm transition-all duration-200 hover:border-stone-200 hover:shadow-md"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-full bg-stone-100 transition-colors group-hover:bg-stone-200">
-                <Zap className="size-4 text-stone-600" />
-              </div>
-              <div>
-                <p className="text-lg font-bold text-stone-900">{pack.label}</p>
-                <p className="text-sm font-semibold text-stone-700">
-                  {pack.credits} Credits
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-1.5 text-xs text-stone-400">
-              <span>≈ Up to {pack.credits} RAG files indexed</span>
-              <span>≈ {Math.floor(pack.credits / 5)} meeting summaries</span>
-            </div>
-
-            <Button
-              size="sm"
-              variant="outline"
-              className="mt-auto w-full rounded-full!"
-              disabled={loading === i}
-              onClick={() => handleBuy(pack, i)}
-            >
-              {loading === i ? "Opening…" : "Buy"}
-            </Button>
-          </div>
-        ))}
-      </div>
+      {/* Pricing Module */}
+      <PricingModule
+        title="Super-charge your Workflow"
+        subtitle="Buy credits to unlock advanced commit insights and meeting summaries."
+        annualBillingLabel="Annual billing (Coming Soon)"
+        buttonLabel="Buy Now"
+        plans={[
+          {
+            id: "starter",
+            name: "Starter",
+            description: "For small projects",
+            icon: <Zap className="w-8 h-8 text-indigo-600" />,
+            priceMonthly: 10,
+            priceYearly: 100,
+            users: "50 Credits",
+            features: [
+              { label: "≈ 50 RAG files indexed", included: true },
+              { label: "10 Meeting summaries", included: true },
+              { label: "Standard support", included: true },
+            ],
+          },
+          {
+            id: "pro",
+            name: "Professional",
+            description: "For active developers",
+            icon: <Zap className="w-8 h-8 text-indigo-600" />,
+            priceMonthly: 15,
+            priceYearly: 150,
+            users: "150 Credits",
+            features: [
+              { label: "≈ 150 RAG files indexed", included: true },
+              { label: "30 Meeting summaries", included: true },
+              { label: "Priority processing", included: true },
+            ],
+          },
+          {
+            id: "team",
+            name: "Team",
+            description: "Best for collaborative teams",
+            icon: <Zap className="w-8 h-8 text-indigo-600" />,
+            priceMonthly: 50,
+            priceYearly: 500,
+            users: "500 Credits",
+            features: [
+              { label: "≈ 500 RAG files indexed", included: true },
+              { label: "100 Meeting summaries", included: true },
+              { label: "Team analytics access", included: true },
+            ],
+            recommended: true,
+          },
+          {
+            id: "enterprise",
+            name: "Enterprise",
+            description: "For large scale operations",
+            icon: <Zap className="w-8 h-8 text-indigo-600" />,
+            priceMonthly: 250,
+            priceYearly: 2500,
+            users: "3000 Credits",
+            features: [
+              { label: "≈ 3000 RAG files indexed", included: true },
+              { label: "600 Meeting summaries", included: true },
+              { label: "Dedicate support line", included: true },
+            ],
+          },
+        ]}
+        onPlanClick={(plan) => {
+          const indexMap: Record<string, number> = {
+            starter: 0,
+            pro: 1,
+            team: 2,
+            enterprise: -1
+          };
+          const idx = indexMap[plan.id];
+          const pack = idx === -1 ? { credits: 3000, price: 250, label: "₹250.00" } : CREDIT_PACKS[idx as any];
+          handleBuy(pack as any, idx as any);
+        }}
+        loadingId={loading !== null ? ["starter", "pro", "team", "enterprise"][loading] : null}
+      />
 
       {/* Transaction history */}
       <div className="mt-8">

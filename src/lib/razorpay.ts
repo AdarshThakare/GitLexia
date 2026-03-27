@@ -11,12 +11,13 @@ const razorpay = new Razorpay({
  * Creates a Razorpay order for the given amount (in INR).
  * Call this before opening the Razorpay checkout on the client.
  */
-export async function createRazorpayOrder(amount: number, credits: number) {
+export async function createRazorpayOrder(amount: number, credits: number, userId: string) {
   const order = await razorpay.orders.create({
     amount: amount * 100,
     currency: "INR",
     notes: {
       credits: String(credits),
+      userId: userId,
     },
   });
 
@@ -47,12 +48,14 @@ export async function verifyAndCreditUser({
   razorpaySignature: string;
 }) {
   // 1. Verify HMAC signature
+  console.log(`[verifyAndCreditUser] Verifying payment: ${razorpayOrderId}|${razorpayPaymentId}`);
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_API_SECRET!)
     .update(`${razorpayOrderId}|${razorpayPaymentId}`)
     .digest("hex");
 
   if (expectedSignature !== razorpaySignature) {
+    console.error(`[verifyAndCreditUser] Signature mismatch: expected ${expectedSignature}, got ${razorpaySignature}`);
     throw new Error("Invalid payment signature");
   }
 
@@ -62,23 +65,46 @@ export async function verifyAndCreditUser({
   });
 
   if (alreadyProcessed) {
+    console.warn(`[verifyAndCreditUser] Payment already processed: ${razorpayPaymentId}`);
     throw new Error("Payment already processed");
   }
 
   // 3. Record transaction + credit user atomically
-  await db.$transaction([
-    db.transaction.create({
-      data: {
-        userId,
-        credits,
-        razorpayOrderId,
-        razorpayPaymentId,
-        razorpaySignature,
-      },
-    }),
-    // db.user.update({
-    //   where: { id: userId },
-    //   data: { credits: { increment: credits } },
-    // }),
-  ]);
+  console.log(`[verifyAndCreditUser] Recording transaction and crediting user ${userId} with ${credits} credits...`);
+  try {
+    await db.$transaction([
+      db.transaction.create({
+        data: {
+          userId,
+          credits,
+          razorpayOrderId,
+          razorpayPaymentId,
+          razorpaySignature,
+        },
+      }),
+      db.user.update({
+        where: { id: userId },
+        data: { credits: { increment: credits } },
+      }),
+    ]);
+    console.log(`[verifyAndCreditUser] Success!`);
+  } catch (error) {
+    console.error(`[verifyAndCreditUser] Transaction failed:`, error);
+    throw error;
+  }
+}
+
+/**
+ * Verifies the Razorpay webhook signature.
+ */
+export function verifyWebhookSignature(
+  body: string,
+  signature: string,
+  secret: string,
+) {
+  const expectedSignature = crypto
+    .createHmac("sha256", secret)
+    .update(body)
+    .digest("hex");
+  return expectedSignature === signature;
 }

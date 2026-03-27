@@ -22,6 +22,8 @@ import Link from "next/link";
 import { ProjectShowcase } from "@/components/ui/project-showcase";
 import type { ProjectStep } from "@/components/ui/project-showcase";
 import { MagneticText } from "@/components/ui/morphing-cursor";
+import { PricingModule, PricingPlan } from "@/components/ui/pricing-module";
+import { Monitor, Users, Building2 } from "lucide-react";
 
 const architectureSteps: ProjectStep[] = [
   {
@@ -131,7 +133,6 @@ const GitLexiaLanding = ({ onExplore }: { onExplore?: () => void }) => {
         <ProjectShowcase steps={featureSteps} label="Advanced Tooling" />
       </section>
 
-      {/* Architecture Section - Dark Theme */}
       <section id="features-section" className="bg-slate-950 py-32 border-y border-white/11 relative overflow-hidden">
         {/* Abstract Background Element */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
@@ -159,6 +160,75 @@ const GitLexiaLanding = ({ onExplore }: { onExplore?: () => void }) => {
           </div>
         </div>
       </section>
+
+      {/* Pricing Section */}
+      <PricingModule
+        title="Simple, Transparent Pricing"
+        subtitle="Choose a plan that fits your project needs. Switch between monthly and yearly billing anytime."
+        annualBillingLabel="Pay annually and save 20%"
+        buttonLabel="Start Now"
+        plans={[
+          {
+            id: "free",
+            name: "Free",
+            description: "For individuals and small projects",
+            icon: <Layers className="w-8 h-8 text-indigo-600" />,
+            priceMonthly: 9,
+            priceYearly: 90,
+            users: "Up to 3 users",
+            features: [
+              { label: "Basic analytics", included: true },
+              { label: "Community access", included: true },
+              { label: "Priority support", included: false },
+            ],
+          },
+          {
+            id: "basic",
+            name: "Basic",
+            description: "For small teams getting started",
+            icon: <Monitor className="w-8 h-8 text-indigo-600" />,
+            priceMonthly: 29,
+            priceYearly: 290,
+            users: "Up to 10 users",
+            features: [
+              { label: "Advanced analytics", included: true },
+              { label: "Priority support", included: true },
+              { label: "Team collaboration tools", included: false },
+            ],
+          },
+          {
+            id: "team",
+            name: "Team",
+            description: "For growing startups and agencies",
+            icon: <Users className="w-8 h-8 text-indigo-600" />,
+            priceMonthly: 99,
+            priceYearly: 990,
+            users: "Up to 50 users",
+            features: [
+              { label: "Dedicated success manager", included: true },
+              { label: "Custom integrations", included: true },
+              { label: "AI-powered insights", included: true },
+            ],
+            recommended: true,
+          },
+          {
+            id: "enterprise",
+            name: "Enterprise",
+            description: "For large organizations with custom needs",
+            icon: <Building2 className="w-8 h-8 text-indigo-600" />,
+            priceMonthly: 199,
+            priceYearly: 1990,
+            users: "Unlimited users",
+            features: [
+              { label: "24/7 priority support", included: true },
+              { label: "Custom SLAs", included: true },
+              { label: "Private cloud hosting", included: true },
+            ],
+          },
+        ]}
+        defaultAnnual={false}
+        onPlanClick={() => router.push("/create")}
+      />
 
       {/* Advanced Call to Action */}
       <section className="py-40 bg-white overflow-hidden">

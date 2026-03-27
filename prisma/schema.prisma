@@ -52,6 +52,7 @@ model User {
   firstName      String?
   lastName       String?
   imageUrl       String?
+  credits        Int             @default(0)
   questionsAsked Question[]
   userToProjects UserToProject[]
   RazorpayTransactions Transaction[]
