@@ -4,7 +4,7 @@ import React from "react";
 import { BackgroundPaths } from "@/components/ui/background-paths";
 import { motion } from "framer-motion";
 import {
-  Github,
+
   Video,
   MessageSquare,
   Zap,
@@ -22,7 +22,7 @@ import Link from "next/link";
 import { ProjectShowcase } from "@/components/ui/project-showcase";
 import type { ProjectStep } from "@/components/ui/project-showcase";
 import { MagneticText } from "@/components/ui/morphing-cursor";
-import { PricingModule, PricingPlan } from "@/components/ui/pricing-module";
+import { PricingModule } from "@/components/ui/pricing-module";
 import { Monitor, Users, Building2 } from "lucide-react";
 
 const architectureSteps: ProjectStep[] = [
@@ -173,8 +173,8 @@ const GitLexiaLanding = ({ onExplore }: { onExplore?: () => void }) => {
             name: "Free",
             description: "For individuals and small projects",
             icon: <Layers className="w-8 h-8 text-indigo-600" />,
-            priceMonthly: 9,
-            priceYearly: 90,
+            priceMonthly: 10,
+            priceYearly: 100,
             users: "Up to 3 users",
             features: [
               { label: "Basic analytics", included: true },
@@ -187,8 +187,8 @@ const GitLexiaLanding = ({ onExplore }: { onExplore?: () => void }) => {
             name: "Basic",
             description: "For small teams getting started",
             icon: <Monitor className="w-8 h-8 text-indigo-600" />,
-            priceMonthly: 29,
-            priceYearly: 290,
+            priceMonthly: 15,
+            priceYearly: 150,
             users: "Up to 10 users",
             features: [
               { label: "Advanced analytics", included: true },
@@ -201,8 +201,8 @@ const GitLexiaLanding = ({ onExplore }: { onExplore?: () => void }) => {
             name: "Team",
             description: "For growing startups and agencies",
             icon: <Users className="w-8 h-8 text-indigo-600" />,
-            priceMonthly: 99,
-            priceYearly: 990,
+            priceMonthly: 50,
+            priceYearly: 500,
             users: "Up to 50 users",
             features: [
               { label: "Dedicated success manager", included: true },
@@ -216,8 +216,8 @@ const GitLexiaLanding = ({ onExplore }: { onExplore?: () => void }) => {
             name: "Enterprise",
             description: "For large organizations with custom needs",
             icon: <Building2 className="w-8 h-8 text-indigo-600" />,
-            priceMonthly: 199,
-            priceYearly: 1990,
+            priceMonthly: 250,
+            priceYearly: 2500,
             users: "Unlimited users",
             features: [
               { label: "24/7 priority support", included: true },

@@ -155,6 +155,10 @@ GitHub Repository URL
         └── Billing (Razorpay Credits)
 ```
 
+```
+screenshots/architecture.png
+```
+
 Key architectural decisions:
 
 - 1️⃣ **T3 Stack** — Next.js + tRPC + Prisma + Tailwind, all in one TypeScript monorepo
@@ -337,6 +341,8 @@ gitlexia/
 └── public/                        ← Static assets
 ```
 
+
+
 ---
 
 # 📊 Input Data
@@ -357,11 +363,13 @@ All repository data is embedded via Gemini and stored in PostgreSQL for semantic
 # 🖼 Screenshots
 
 ```
-screenshots/dashboard-overview.png
-screenshots/chat-interface.png
-screenshots/contributor-analytics.png
-screenshots/meeting-intelligence.png
-screenshots/billing.png
+screenshots/landing.png
+screenshots/create.png
+screenshots/dashboard.png
+screenshots/qna.png
+screenshots/chat.png
+screenshots/analytics.png
+screenshots/meeting.png
 ```
 
 ---
