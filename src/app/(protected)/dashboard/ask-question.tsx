@@ -102,6 +102,20 @@ const AskQuestionCard = () => {
                 >
                   Save Answer
                 </Button>
+                <Button
+                    variant={"default"}
+                    disabled={!answer}
+                    onClick={() => {
+                        const initialMessages = [
+                            { id: "1", role: "user", content: question },
+                            { id: "2", role: "assistant", content: answer }
+                        ];
+                        localStorage.setItem("gitlexia-chat-init", JSON.stringify(initialMessages));
+                        window.location.href = "/qna/chat";
+                    }}
+                >
+                    Continue in Chat
+                </Button>
               </div>
             </DialogTitle>
             <DialogDescription className="sr-only">

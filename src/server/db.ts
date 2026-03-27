@@ -8,9 +8,9 @@ const createPrismaClient = () =>
   });
 
 const globalForPrisma = globalThis as unknown as {
-  prismaReloaded: ReturnType<typeof createPrismaClient> | undefined;
+  prismaChatV2: ReturnType<typeof createPrismaClient> | undefined;
 };
 
-export const db = globalForPrisma.prismaReloaded ?? createPrismaClient();
+export const db = globalForPrisma.prismaChatV2 ?? createPrismaClient();
 
-if (env.NODE_ENV !== "production") globalForPrisma.prismaReloaded = db;
+if (env.NODE_ENV !== "production") globalForPrisma.prismaChatV2 = db;

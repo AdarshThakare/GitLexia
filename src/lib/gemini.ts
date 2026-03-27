@@ -1,8 +1,12 @@
-import { google } from "@ai-sdk/google";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Document } from "@langchain/core/documents";
 import dotenv from "dotenv";
 dotenv.config();
+
+export const google = createGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 const model = genAI.getGenerativeModel({
@@ -58,7 +62,7 @@ export const aiSummarizedCommit = async (diff: string) => {
   try {
     const { text } = await generateText({
       model: groq("openai/gpt-oss-20b"),
-      prompt: `You are an expert programmer, and you are trying to summarize a git diff.
+      prompt: `You are an expert programmer, sand you are trying to summarize a git diff.
       Reminders about the git diff format.
       For every file, there are a few metadata lines, like(for example):   
       \`\`\`

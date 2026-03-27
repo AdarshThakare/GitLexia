@@ -223,6 +223,16 @@ exports.Prisma.SourceCodeEmbeddingScalarFieldEnum = {
   projectId: 'projectId'
 };
 
+exports.Prisma.ChatScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  title: 'title',
+  messages: 'messages',
+  projectId: 'projectId',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -230,6 +240,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -264,7 +278,8 @@ exports.Prisma.ModelName = {
   UserToProject: 'UserToProject',
   Commit: 'Commit',
   MeetingReport: 'MeetingReport',
-  SourceCodeEmbedding: 'SourceCodeEmbedding'
+  SourceCodeEmbedding: 'SourceCodeEmbedding',
+  Chat: 'Chat'
 };
 
 /**

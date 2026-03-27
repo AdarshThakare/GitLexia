@@ -20,8 +20,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${sup.className}`}>
-        <body>
+      <html lang="en" className={`${sup.className}`} suppressHydrationWarning>
+        <body suppressHydrationWarning>
           <TRPCReactProvider>{children}</TRPCReactProvider>
           <Toaster richColors />
         </body>

@@ -194,6 +194,39 @@ export const projectRouter = createTRPCRouter({
       });
     }),
 
+  saveChat: protectedProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+        title: z.string(),
+        messages: z.any(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.db.chat.create({
+        data: {
+          projectId: input.projectId,
+          title: input.title,
+          messages: input.messages,
+          userId: ctx.user.userId!,
+        },
+      });
+    }),
+
+  getChats: protectedProcedure
+    .input(z.object({ projectId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.chat.findMany({
+        where: {
+          projectId: input.projectId,
+          userId: ctx.user.userId!,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
+    }),
+
   uploadMeeting: protectedProcedure
     .input(
       z.object({
