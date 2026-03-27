@@ -155,9 +155,9 @@ GitHub Repository URL
         └── Billing (Razorpay Credits)
 ```
 
-```
+
 ![System Architecture](screenshots/architecture.png)
-```
+
 
 Key architectural decisions:
 
@@ -364,15 +364,19 @@ All repository data is embedded via Gemini and stored in PostgreSQL for semantic
 
 # 🖼 Screenshots
 
-```
 ![Landing Page](screenshots/landing.png)
+
 ![Create Page](screenshots/create.png)
+
 ![dashboard Page](screenshots/dashboard.png)
+
 ![QNA Page](screenshots/qna.png)
+
 ![Chats Page](screenshots/chat.png)
+
 ![Analytics Page](screenshots/analytics.png)
+
 ![Meetings Page](screenshots/meeting.png)
-```
 
 ---
 
