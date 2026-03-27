@@ -57,21 +57,20 @@ const page = () => {
     }
   }, [projectLoading, project, router]);
 
-  if (projectLoading || !project) return null;
-
-  const { data: questions, isLoading } = api.project.getQuestion.useQuery({
-    projectId,
-  });
+  const { data: questions, isLoading } = api.project.getQuestion.useQuery(
+    { projectId },
+    { enabled: !!projectId }
+  );
 
   const [questionIndex, setQuestionIndex] = useState(0);
   const question = questions?.[questionIndex];
 
+  if (projectLoading || !project) return null;
+
   return (
     <Sheet>
       <div className="flex flex-col gap-8 animate-in fade-in duration-700">
-        <div className="bg-white rounded-md border border-slate-200 p-2 shadow-sm">
-          <AskQuestionCard />
-        </div>
+        <AskQuestionCard />
 
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between border-b border-slate-100 pb-4">

@@ -214,7 +214,7 @@ function AnalyticsContent() {
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-6">
                 <div>
-                  <h2 className="text-3xl font-black text-slate-900 tracking-tight" style={{ fontFamily: 'sup' }}>Intelligent Gists of Contributors</h2>
+                  <h2 className="text-3xl font-black text-slate-900 tracking-tight" style={{ fontFamily: 'sup' }}>Gists of Individual Contributions</h2>
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1" style={{ fontFamily: 'sup' }}>Semantic mapping of individual functional contributions</p>
                 </div>
               </div>

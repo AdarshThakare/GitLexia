@@ -7447,6 +7447,7 @@ export namespace Prisma {
     updatedAt: Date | null
     name: string | null
     githubUrl: string | null
+    isIndexed: boolean | null
     deletedAt: Date | null
   }
 
@@ -7456,6 +7457,7 @@ export namespace Prisma {
     updatedAt: Date | null
     name: string | null
     githubUrl: string | null
+    isIndexed: boolean | null
     deletedAt: Date | null
   }
 
@@ -7465,6 +7467,7 @@ export namespace Prisma {
     updatedAt: number
     name: number
     githubUrl: number
+    isIndexed: number
     deletedAt: number
     _all: number
   }
@@ -7476,6 +7479,7 @@ export namespace Prisma {
     updatedAt?: true
     name?: true
     githubUrl?: true
+    isIndexed?: true
     deletedAt?: true
   }
 
@@ -7485,6 +7489,7 @@ export namespace Prisma {
     updatedAt?: true
     name?: true
     githubUrl?: true
+    isIndexed?: true
     deletedAt?: true
   }
 
@@ -7494,6 +7499,7 @@ export namespace Prisma {
     updatedAt?: true
     name?: true
     githubUrl?: true
+    isIndexed?: true
     deletedAt?: true
     _all?: true
   }
@@ -7576,6 +7582,7 @@ export namespace Prisma {
     updatedAt: Date
     name: string
     githubUrl: string
+    isIndexed: boolean
     deletedAt: Date | null
     _count: ProjectCountAggregateOutputType | null
     _min: ProjectMinAggregateOutputType | null
@@ -7602,6 +7609,7 @@ export namespace Prisma {
     updatedAt?: boolean
     name?: boolean
     githubUrl?: boolean
+    isIndexed?: boolean
     deletedAt?: boolean
     userToProjects?: boolean | Project$userToProjectsArgs<ExtArgs>
     commits?: boolean | Project$commitsArgs<ExtArgs>
@@ -7618,6 +7626,7 @@ export namespace Prisma {
     updatedAt?: boolean
     name?: boolean
     githubUrl?: boolean
+    isIndexed?: boolean
     deletedAt?: boolean
   }, ExtArgs["result"]["project"]>
 
@@ -7627,6 +7636,7 @@ export namespace Prisma {
     updatedAt?: boolean
     name?: boolean
     githubUrl?: boolean
+    isIndexed?: boolean
     deletedAt?: boolean
   }, ExtArgs["result"]["project"]>
 
@@ -7636,10 +7646,11 @@ export namespace Prisma {
     updatedAt?: boolean
     name?: boolean
     githubUrl?: boolean
+    isIndexed?: boolean
     deletedAt?: boolean
   }
 
-  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "name" | "githubUrl" | "deletedAt", ExtArgs["result"]["project"]>
+  export type ProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "name" | "githubUrl" | "isIndexed" | "deletedAt", ExtArgs["result"]["project"]>
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userToProjects?: boolean | Project$userToProjectsArgs<ExtArgs>
     commits?: boolean | Project$commitsArgs<ExtArgs>
@@ -7668,6 +7679,7 @@ export namespace Prisma {
       updatedAt: Date
       name: string
       githubUrl: string
+      isIndexed: boolean
       deletedAt: Date | null
     }, ExtArgs["result"]["project"]>
     composites: {}
@@ -8103,6 +8115,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"Project", 'DateTime'>
     readonly name: FieldRef<"Project", 'String'>
     readonly githubUrl: FieldRef<"Project", 'String'>
+    readonly isIndexed: FieldRef<"Project", 'Boolean'>
     readonly deletedAt: FieldRef<"Project", 'DateTime'>
   }
     
@@ -13077,6 +13090,7 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     name: 'name',
     githubUrl: 'githubUrl',
+    isIndexed: 'isIndexed',
     deletedAt: 'deletedAt'
   };
 
@@ -13248,6 +13262,13 @@ export namespace Prisma {
    * Reference to a field of type 'QueryMode'
    */
   export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -13626,6 +13647,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Project"> | Date | string
     name?: StringFilter<"Project"> | string
     githubUrl?: StringFilter<"Project"> | string
+    isIndexed?: BoolFilter<"Project"> | boolean
     deletedAt?: DateTimeNullableFilter<"Project"> | Date | string | null
     userToProjects?: UserToProjectListRelationFilter
     commits?: CommitListRelationFilter
@@ -13641,6 +13663,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     githubUrl?: SortOrder
+    isIndexed?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     userToProjects?: UserToProjectOrderByRelationAggregateInput
     commits?: CommitOrderByRelationAggregateInput
@@ -13659,6 +13682,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Project"> | Date | string
     name?: StringFilter<"Project"> | string
     githubUrl?: StringFilter<"Project"> | string
+    isIndexed?: BoolFilter<"Project"> | boolean
     deletedAt?: DateTimeNullableFilter<"Project"> | Date | string | null
     userToProjects?: UserToProjectListRelationFilter
     commits?: CommitListRelationFilter
@@ -13674,6 +13698,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     githubUrl?: SortOrder
+    isIndexed?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     _count?: ProjectCountOrderByAggregateInput
     _max?: ProjectMaxOrderByAggregateInput
@@ -13689,6 +13714,7 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
     name?: StringWithAggregatesFilter<"Project"> | string
     githubUrl?: StringWithAggregatesFilter<"Project"> | string
+    isIndexed?: BoolWithAggregatesFilter<"Project"> | boolean
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
   }
 
@@ -14337,6 +14363,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     commits?: CommitCreateNestedManyWithoutProjectInput
@@ -14352,6 +14379,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
@@ -14367,6 +14395,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     commits?: CommitUpdateManyWithoutProjectNestedInput
@@ -14382,6 +14411,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
@@ -14397,6 +14427,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
   }
 
@@ -14406,6 +14437,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -14415,6 +14447,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -15105,6 +15138,11 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -15162,6 +15200,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     githubUrl?: SortOrder
+    isIndexed?: SortOrder
     deletedAt?: SortOrder
   }
 
@@ -15171,6 +15210,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     githubUrl?: SortOrder
+    isIndexed?: SortOrder
     deletedAt?: SortOrder
   }
 
@@ -15180,7 +15220,16 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     githubUrl?: SortOrder
+    isIndexed?: SortOrder
     deletedAt?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15673,6 +15722,10 @@ export namespace Prisma {
     connect?: MeetingReportWhereUniqueInput | MeetingReportWhereUniqueInput[]
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -16100,6 +16153,11 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -16109,6 +16167,14 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -16131,6 +16197,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     commits?: CommitCreateNestedManyWithoutProjectInput
@@ -16145,6 +16212,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
@@ -16207,6 +16275,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     commits?: CommitUpdateManyWithoutProjectNestedInput
@@ -16221,6 +16290,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
@@ -16549,6 +16619,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     commits?: CommitCreateNestedManyWithoutProjectInput
@@ -16563,6 +16634,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
@@ -16618,6 +16690,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     commits?: CommitUpdateManyWithoutProjectNestedInput
@@ -16632,6 +16705,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
@@ -17024,6 +17098,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     commits?: CommitCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
@@ -17038,6 +17113,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
@@ -17099,6 +17175,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     commits?: CommitUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
@@ -17113,6 +17190,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
@@ -17127,6 +17205,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingCreateNestedManyWithoutProjectInput
@@ -17141,6 +17220,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedCreateNestedManyWithoutProjectInput
@@ -17171,6 +17251,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUpdateManyWithoutProjectNestedInput
@@ -17185,6 +17266,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     sourceCodeEmbeddings?: SourceCodeEmbeddingUncheckedUpdateManyWithoutProjectNestedInput
@@ -17199,6 +17281,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     commits?: CommitCreateNestedManyWithoutProjectInput
@@ -17213,6 +17296,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
@@ -17243,6 +17327,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     commits?: CommitUpdateManyWithoutProjectNestedInput
@@ -17257,6 +17342,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput
@@ -17271,6 +17357,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectCreateNestedManyWithoutProjectInput
     commits?: CommitCreateNestedManyWithoutProjectInput
@@ -17285,6 +17372,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     githubUrl: string
+    isIndexed?: boolean
     deletedAt?: Date | string | null
     userToProjects?: UserToProjectUncheckedCreateNestedManyWithoutProjectInput
     commits?: CommitUncheckedCreateNestedManyWithoutProjectInput
@@ -17315,6 +17403,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUpdateManyWithoutProjectNestedInput
     commits?: CommitUpdateManyWithoutProjectNestedInput
@@ -17329,6 +17418,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     githubUrl?: StringFieldUpdateOperationsInput | string
+    isIndexed?: BoolFieldUpdateOperationsInput | boolean
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userToProjects?: UserToProjectUncheckedUpdateManyWithoutProjectNestedInput
     commits?: CommitUncheckedUpdateManyWithoutProjectNestedInput

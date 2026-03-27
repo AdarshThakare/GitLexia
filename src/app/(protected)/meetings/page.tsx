@@ -50,24 +50,26 @@ const MeetingsPage = () => {
   const { projectId, project, isLoading: projectLoading } = useProject();
   const router = useRouter();
 
-  React.useEffect(() => {
-    if (!projectLoading && !project) {
-      toast.error("Please select a project first");
-      router.push("/create");
-    }
-  }, [projectLoading, project, router]);
-
-  if (projectLoading || !project) return null;
-
+  // ── All hooks must be called unconditionally (Rules of Hooks) ──────────────
   const [status, setStatus] = React.useState("");
   const [progress, setProgress] = React.useState(0);
 
   const { data: meetings, isLoading } = api.project.getMeetings.useQuery(
     { projectId },
     {
-      refetchInterval: 4000,
+      refetchInterval: 10000,
+      // Only run the query once we have a projectId
+      enabled: !!projectId,
     },
   );
+
+  // Redirect to /create if no project is selected (after loading finishes)
+  React.useEffect(() => {
+    if (!projectLoading && !project) {
+      toast.error("Please select a project first");
+      router.push("/create");
+    }
+  }, [projectLoading, project, router]);
 
   React.useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -100,11 +102,13 @@ const MeetingsPage = () => {
   const deleteMeeting = api.project.deleteMeetings.useMutation();
   const refetch = useRefetch();
 
+  // ── Guard: render nothing until project is resolved ────────────────────────
+  if (projectLoading || !project) return null;
+
   return (
     <div className="flex flex-col gap-8 animate-in fade-in duration-700">
-      <div className="bg-white rounded-md border border-slate-200 p-2 shadow-sm">
-        <UploadingMeetingCard />
-      </div>
+      <UploadingMeetingCard />
+
 
       {meetings?.some((m) => m.status === "PROCESSING") && (
         <div className="rounded-lg border border-blue-100 bg-blue-50/50 p-4 shadow-sm">

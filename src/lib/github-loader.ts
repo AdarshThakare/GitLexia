@@ -85,4 +85,3 @@ export const indexGithubRepo = async (
   );
   console.log("Indexing completed.");
 };
-

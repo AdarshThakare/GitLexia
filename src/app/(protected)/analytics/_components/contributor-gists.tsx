@@ -60,34 +60,10 @@ export default function ContributorGists({ stats, commits }: ContributorGistsPro
             </div>
             <div className="text-right">
               <p className="text-2xl font-black text-slate-900" style={{ fontFamily: 'sup' }}>{author.totalCommits}</p>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>Total Node Weight</p>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>Total Work Points</p>
             </div>
           </div>
 
-          <div className="p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <Brain className="size-4 text-indigo-600" />
-              <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest" style={{ fontFamily: 'sup' }}>Functional Intelligence Gist</h5>
-            </div>
-
-            <div className="space-y-4">
-              {author.gists.length > 0 ? (
-                author.gists.map((gist, i) => (
-                  <div key={i} className="flex gap-4 group/item">
-                    <div className="mt-1.5 size-1.5 rounded-full bg-slate-200 group-hover/item:bg-indigo-400 transition-colors shrink-0" />
-                    <p className="text-sm font-medium text-slate-600 leading-relaxed transition-colors group-hover/item:text-slate-900" style={{ fontFamily: 'sup' }}>
-                      {gist}
-                    </p>
-                  </div>
-                ))
-              ) : (
-                <div className="py-8 flex flex-col items-center justify-center text-center opacity-40">
-                  <Cpu className="size-8 mb-3 text-slate-300" />
-                  <p className="text-xs font-bold uppercase tracking-widest" style={{ fontFamily: 'sup' }}>No semantic data indexed</p>
-                </div>
-              )}
-            </div>
-          </div>
         </Card>
       ))}
     </div>

@@ -90,6 +90,22 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Bauhaus theme */
+  --bauhaus-card-bg: #f0f4fb;
+  --bauhaus-card-separator: #d3dce8;
+  --bauhaus-card-accent: #2563eb;
+  --bauhaus-card-radius: 2em;
+  --bauhaus-card-border-width: 2px;
+  --bauhaus-card-inscription-top: #3b4252;
+  --bauhaus-card-inscription-main: #1e3a8a;
+  --bauhaus-card-inscription-sub: #1e40af;
+  --bauhaus-card-inscription-progress-label: #454f55;
+  --bauhaus-card-inscription-progress-value: #1c2541;
+  --bauhaus-card-progress-bar-bg: #e5e7eb;
+  --bauhaus-chronicle-bg: #1e40af;
+  --bauhaus-chronicle-fg: #fff;
+  --bauhaus-chronicle-hover-fg: #fff;
 }
 
 .dark {
@@ -124,6 +140,22 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.439 0 0);
+
+  /* Bauhaus theme dark */
+  --bauhaus-card-bg: #151419;
+  --bauhaus-card-separator: #2F2B2A;
+  --bauhaus-card-accent: #3b82f6;
+  --bauhaus-card-radius: 2em;
+  --bauhaus-card-border-width: 2px;
+  --bauhaus-card-inscription-top: #bfc7d5;
+  --bauhaus-card-inscription-main: #eff6ff;
+  --bauhaus-card-inscription-sub: #bfdbfe;
+  --bauhaus-card-inscription-progress-label: #b5b6c4;
+  --bauhaus-card-inscription-progress-value: #e7e7f7;
+  --bauhaus-card-progress-bar-bg: #363636;
+  --bauhaus-chronicle-bg: #3b82f6;
+  --bauhaus-chronicle-fg: #151419;
+  --bauhaus-chronicle-hover-fg: #fff;
 }
 
 @layer base {

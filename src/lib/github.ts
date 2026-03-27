@@ -1,7 +1,7 @@
 import { db } from "../server/db";
 import { Octokit } from "octokit";
 import axios from "axios";
-import { aiSummarizedCommit } from "./gemini";
+import { aiSummarizedCommit, retryAiSummarizedCommit } from "./gemini";
 import dotenv from "dotenv";
 import pLimit from "p-limit";
 dotenv.config();
@@ -98,14 +98,27 @@ export const pollCommits = async (projectId: string) => {
 
 
 export async function summarizeCommit(githubUrl: string, commitHash: string) {
-  const { data } = await axios.get(`${githubUrl}/commit/${commitHash}.diff`, {
+  const [OWNER, REPO] = githubUrl.split("/").slice(-2);
+  const { data } = await axios.get(`https://api.github.com/repos/${OWNER}/${REPO}/commits/${commitHash}`, {
     headers: {
       Accept: "application/vnd.github.v3.diff",
-      Authorization: `token ${process.env.GITHUB_TOKEN}`,
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
     },
   });
 
   return (await aiSummarizedCommit(data)) || "";
+}
+
+export async function retrySummarizeCommit(githubUrl: string, commitHash: string) {
+  const [OWNER, REPO] = githubUrl.split("/").slice(-2);
+  const { data } = await axios.get(`https://api.github.com/repos/${OWNER}/${REPO}/commits/${commitHash}`, {
+    headers: {
+      Accept: "application/vnd.github.v3.diff",
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+  });
+
+  return (await retryAiSummarizedCommit(data)) || "";
 }
 // --------------------
 async function fetchProjectGithubUrl(projectId: string) {

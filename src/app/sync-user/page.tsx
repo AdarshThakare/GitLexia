@@ -38,7 +38,7 @@ const page = async () => {
     },
   });
 
-  return redirect("/dashboard");
+  return redirect("/");
 };
 
 export default page;

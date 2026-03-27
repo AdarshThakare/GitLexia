@@ -20,7 +20,7 @@ const BreadcrumbNav = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const pathsegments = pathname.split("/").filter(Boolean);
-  
+
   // Custom logic for Analytics tabs in breadcrumbs
   const activeTab = searchParams.get("tab");
   if (pathname.includes("/analytics") && activeTab) {
@@ -31,7 +31,7 @@ const BreadcrumbNav = () => {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="/dashboard" className="text-slate-400 font-medium hover:text-slate-900 transition-colors" style={{ fontFamily: 'sup' }}>GitLexia</BreadcrumbLink>
+          <BreadcrumbLink href="/" className="text-slate-400 font-medium hover:text-slate-900 transition-colors" style={{ fontFamily: 'sup' }}>GitLexia</BreadcrumbLink>
         </BreadcrumbItem>
         {pathsegments.map((segment, index) => (
           <React.Fragment key={segment}>
@@ -77,15 +77,15 @@ const SidebarLayout = ({ children }: { children: ReactNode }) => {
 
           <div className="flex items-center gap-6">
             {/* Command Pallete Trigger / Search */}
-            <div className="hidden md:flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl hover:border-slate-300 transition-all cursor-text group">
+            {/* <div className="hidden md:flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl hover:border-slate-300 transition-all cursor-text group">
               <Search className="size-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
               <span className="text-xs text-slate-400 font-bold pr-8" style={{ fontFamily: 'sup' }}>Search Intelligence...</span>
               <Kbd className="bg-white border-slate-200 text-[10px] px-1.5 py-0">⌘</Kbd>
               <Kbd className="bg-white border-slate-200 text-[10px] px-1.5 py-0">K</Kbd>
-            </div>
+            </div> */}
 
             <div className="h-6 w-px bg-slate-200" />
-            
+
             <div className="min-w-[40px] flex justify-center">
               {hasMounted ? <UserButton afterSignOutUrl="/" /> : <div className="size-10 rounded-full bg-slate-100 animate-pulse" />}
             </div>

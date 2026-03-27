@@ -64,8 +64,32 @@ export const projectRouter = createTRPCRouter({
       });
       if (!project) throw new Error("Project not found");
 
-      // Execute chunking and polling
-      await indexGithubRepo(project.id, project.githubUrl, input.githubToken);
+      // Execute commit polling
+      await pollCommits(project.id);
+
+      return { success: true };
+    }),
+
+  // Returns the indexed status so the client can poll
+  getProjectStatus: protectedProcedure
+    .input(z.object({ projectId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const project = await ctx.db.project.findUnique({
+        where: { id: input.projectId },
+        select: { isIndexed: true },
+      });
+      return { isIndexed: project?.isIndexed ?? false };
+    }),
+
+  // Fetch + summarise new commits only — no re-indexing of source code
+  generateCommitSummaries: protectedProcedure
+    .input(z.object({ projectId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const project = await ctx.db.project.findUnique({
+        where: { id: input.projectId },
+      });
+      if (!project) throw new Error("Project not found");
+
       await pollCommits(project.id);
 
       return { success: true };
@@ -486,8 +510,8 @@ export const projectRouter = createTRPCRouter({
       if (!commit) throw new Error("Commit not found");
 
       // Import summarizeCommit dynamically or from github.ts
-      const { summarizeCommit } = await import("@/lib/github");
-      const summary = await summarizeCommit(commit.project.githubUrl, commit.commitHash);
+      const { retrySummarizeCommit } = await import("@/lib/github");
+      const summary = await retrySummarizeCommit(commit.project.githubUrl, commit.commitHash);
 
       return await ctx.db.commit.update({
         where: { id: input.commitId },

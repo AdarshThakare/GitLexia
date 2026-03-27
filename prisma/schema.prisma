@@ -91,6 +91,7 @@ model Project {
   updatedAt            DateTime              @updatedAt
   name                 String
   githubUrl            String
+  isIndexed            Boolean               @default(false)
   deletedAt            DateTime?
   userToProjects       UserToProject[]
   commits              Commit[]

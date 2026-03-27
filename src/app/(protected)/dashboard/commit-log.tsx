@@ -17,14 +17,7 @@ const CommitLog = () => {
   const [progress, setProgress] = useState(0);
 
   const { data: commits, isLoading } = api.project.getCommits.useQuery(
-    { projectId },
-    {
-      // Refetch every 3 seconds while insights are being generated
-      refetchInterval: (query) => {
-        const hasMissingSummary = query.state.data?.some((c) => !c.summary);
-        return hasMissingSummary ? 3000 : false;
-      },
-    },
+    { projectId }
   );
 
 

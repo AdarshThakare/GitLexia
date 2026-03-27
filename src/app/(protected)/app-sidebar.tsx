@@ -29,7 +29,7 @@ const AppSidebar = () => {
     <Sidebar collapsible="icon" variant="floating">
       <SidebarHeader>
         <SidebarTrigger />
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Image
             src="/icon.png"
             alt="logo"
@@ -40,7 +40,7 @@ const AppSidebar = () => {
           {open && (
             <h1 className="text-primary/80 text-3xl font-bold">GitLexia</h1>
           )}
-        </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
