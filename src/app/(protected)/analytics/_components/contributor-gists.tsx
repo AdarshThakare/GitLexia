@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Brain, Cpu, MessageSquare, Zap, Target, ShieldCheck } from "lucide-react";
+import { Brain, Cpu, MessageSquare, Zap, Target, ShieldCheck, ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import useProject from "@/hooks/use-project";
+import Link from "next/link";
 
 interface ContributorGistsProps {
   stats: any[];
@@ -11,6 +13,7 @@ interface ContributorGistsProps {
 }
 
 export default function ContributorGists({ stats, commits }: ContributorGistsProps) {
+  const { project } = useProject();
   const authorGists = useMemo(() => {
     if (!stats || !commits) return [];
 
@@ -64,6 +67,17 @@ export default function ContributorGists({ stats, commits }: ContributorGistsPro
             </div>
           </div>
 
+          <div className="p-4 border-t border-slate-50 flex justify-center bg-slate-50/10 group-hover:bg-indigo-50/10 transition-colors">
+            <Link
+              href={`https://gitglance.vercel.app/${project?.githubUrl.split("/")[3]}`}
+              target="_blank"
+              className="flex items-center gap-2 text-[10px] font-black text-indigo-500 hover:text-indigo-600 transition-colors uppercase tracking-[0.2em]"
+              style={{ fontFamily: 'sup' }}
+            >
+              View Profile analysis
+              <ExternalLink className="size-3" />
+            </Link>
+          </div>
         </Card>
       ))}
     </div>

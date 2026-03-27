@@ -134,11 +134,13 @@ const CommitLog = () => {
               </div>
 
               <>
-                <img
-                  src={commit.commitAuthorAvatar}
-                  alt="commit avatar"
-                  className="relative mt-4 size-8 flex-none rounded-full bg-gray-100"
-                />
+                <Link className="relative mt-4 size-8 flex-none rounded-full bg-gray-100" target="_blank" href={`https://gitglance.vercel.app/${project?.githubUrl.split("/")[3]}`}>
+                  <img
+                    src={commit.commitAuthorAvatar}
+                    alt="commit avatar"
+                    className="rounded-full"
+                  />
+                </Link>
                 <div className="rounded-mg flex-auto bg-white p-3 px-5 ring-1 ring-gray-200 ring-inset">
                   <div className="flex justify-between gap-x-4">
                     <Link
